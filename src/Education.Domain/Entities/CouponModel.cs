@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Education.Domain.Entities
 {
-    public class VideoModel
+    public class CouponModel
     {
         public Guid Id {  get; set; }
-        public string VideoPath { get; set; }
-        public string Length { get; set; }
-        public virtual List<VideoFeedbackModel> Feedbacs { get; set; }
+        public string CouponCode { get; set; }
+        public int Discount { get; set; }
     }
 }
