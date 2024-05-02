@@ -14,6 +14,7 @@ namespace Education.Domain.Entities
         //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
         public Guid CourseId { get; set; }
         public virtual List<UserModel> Students { get; set; }
+        public virtual List<MessageModel> Messages { get; set; }
         public virtual CourseModel Course { get; set; }
     }
 }
