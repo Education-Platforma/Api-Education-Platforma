@@ -9,7 +9,7 @@ namespace Education.Domain.Entities
 {
     public class UserActivityModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public DateTimeOffset Date { get; set; }
         public double WatchedVideosByMinute { get; set; }
         public Guid UserId { get; set; }

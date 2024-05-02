@@ -8,7 +8,7 @@ namespace Education.Domain.Entities
 {
     public class CouponModel
     {
-        public Guid Id {  get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string CouponCode { get; set; }
         public int Discount { get; set; }
     }

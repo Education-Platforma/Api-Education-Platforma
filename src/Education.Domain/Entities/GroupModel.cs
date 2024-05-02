@@ -9,7 +9,7 @@ namespace Education.Domain.Entities
 {
     public class GroupModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string GroupName { get; set; }
         //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
         public Guid CourseId { get; set; }

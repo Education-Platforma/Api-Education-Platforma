@@ -9,7 +9,7 @@ namespace Education.Domain.Entities
 {
     public class MessageModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Message { get; set; }
         public DateTimeOffset Date { get; set; }
         public Guid GoupId { get; set; }
