@@ -9,7 +9,7 @@ namespace Education.Domain.Entities
     public class LessonModel
     {
 
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; }
         public int ExpForWatching { get; set; }
         //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
