@@ -19,5 +19,6 @@ namespace Education.Application.UseCases.UserCases.Commands
 
         public IFormFile? Photo { get; set; }
         public string Counry { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

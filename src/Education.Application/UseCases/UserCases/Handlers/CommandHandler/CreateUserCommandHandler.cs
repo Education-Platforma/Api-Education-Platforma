@@ -49,6 +49,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
                 PhotoPath = "/UserPhotos/" + fileName,
                 PasswordHash = request.Password,
                 Country = request.Counry,
+                PhoneNumber = request.phoneNumber
             };
             var author = await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync(cancellationToken);
