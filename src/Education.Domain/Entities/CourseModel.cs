@@ -16,6 +16,7 @@ namespace Education.Domain.Entities
         public double Price { get; set; }
         public int SoldCount { get; set; }
         public string Language { get; set;}
+        public CourseActivityModel Activity { get; set; } = CourseActivityModel.Blocked;
         //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
         public Guid UserId { get; set; }
         public Guid CouponId { get; set; }
@@ -23,7 +24,7 @@ namespace Education.Domain.Entities
         public virtual CouponModel Coupon { get; set; }
         public virtual UserModel User { get; set; }
         public virtual CategoryModel Category { get; set; }
-
+        public virtual CourseActivityModel CourseActivity { get; set; }
         public virtual List<LessonModel> Lessons { get; set; }
         public virtual List<CourseFeedbackModel> Feedbacks { get; set; }
     }
