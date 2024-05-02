@@ -24,8 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    
-	  <Folder Include="UseCases\UserCase\Queries\" />
     <Folder Include="UseCases\UserCases\Commands\" />
     <Folder Include="UseCases\UserCases\Handlers\CommandHandler\" />
     <Folder Include="UseCases\UserCases\Handlers\QueryHandler\" />
