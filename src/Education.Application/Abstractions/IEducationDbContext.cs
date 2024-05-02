@@ -22,6 +22,7 @@ namespace Education.Application.Abstractions
         public DbSet<StatisticModel> Statistics { get; set; }
         public DbSet<VideoModel> Videos { get; set; }
         public DbSet<CourseFeedbackModel> CourseFeedbacks { get; set; }
+        public DbSet<VideoFeedbackModel> VideoFeedbacks { get; set; }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 

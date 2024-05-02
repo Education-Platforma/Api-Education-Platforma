@@ -25,5 +25,6 @@ namespace Education.Infrastructure.Persistance
         public DbSet<StatisticModel> Statistics { get; set; }
         public DbSet<VideoModel> Videos { get; set; }
         public DbSet<CourseFeedbackModel> CourseFeedbacks { get; set; }
+        public DbSet<VideoFeedbackModel> VideoFeedbacks { get; set; }
     }
 }
