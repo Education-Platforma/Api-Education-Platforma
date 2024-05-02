@@ -16,4 +16,11 @@
     <ProjectReference Include="..\Education.Domain\Education.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UseCases\CategoryCase\Commands\" />
+    <Folder Include="UseCases\CategoryCase\Handlers\" />
+    <Folder Include="UseCases\CategoryCase\Queries\" />
+    <Folder Include="UseCases\UserCase\Queries\" />
+  </ItemGroup>
+
 </Project>
