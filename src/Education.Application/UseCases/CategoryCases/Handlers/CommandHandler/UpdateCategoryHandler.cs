@@ -27,6 +27,7 @@ namespace Education.Application.UseCases.CategoryCases.Handlers.CommandHandler
                 if(category is not null)
                 {
                     category.Name = request.NewName;
+                    _context.Categories.Update(category);
                     await _context.SaveChangesAsync();
                 }
 
