@@ -22,6 +22,5 @@ namespace Education.Domain.Entities.Auth
         public bool IsActive { get; set; } = false;
         public Guid GroupModelId { get; set; }
         public virtual GroupModel GroupModel { get; set; }
-
     }
 }
