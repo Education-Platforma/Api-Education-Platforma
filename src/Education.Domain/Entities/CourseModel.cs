@@ -10,7 +10,7 @@ namespace Education.Domain.Entities
 {
     public class CourseModel
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string CourseName { get; set; }
         public string Description { get; set; }
         public double TotalTime { get; set; }
