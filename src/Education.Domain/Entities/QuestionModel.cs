@@ -15,4 +15,4 @@ namespace Education.Domain.Entities
         public char CorrectOption { get; set; }
         public int Exp {  get; set; }
     }
-}
+} 
