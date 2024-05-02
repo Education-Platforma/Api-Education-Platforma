@@ -21,11 +21,11 @@
     <Folder Include="UseCases\CategoryCase\Commands\" />
     <Folder Include="UseCases\CategoryCase\Handlers\" />
     <Folder Include="UseCases\CategoryCase\Queries\" />
-    <Folder Include="UseCases\UserCase\Queries\" />
+    
+	  <Folder Include="UseCases\UserCase\Queries\" />
     <Folder Include="UseCases\UserCases\Commands\" />
     <Folder Include="UseCases\UserCases\Handlers\CommandHandler\" />
     <Folder Include="UseCases\UserCases\Handlers\QueryHandler\" />
-    <Folder Include="UseCases\UserCases\Queries\" />
   </ItemGroup>
 
 </Project>

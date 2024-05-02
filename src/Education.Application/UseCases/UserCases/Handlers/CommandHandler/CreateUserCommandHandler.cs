@@ -37,7 +37,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
                         await file.CopyToAsync(stream);
                     }
                 }
-                catch ()
+                catch (Exception e)
                 {
                     throw new Exception("Something went wrong ");
                 }
