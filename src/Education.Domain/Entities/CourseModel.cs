@@ -1,4 +1,5 @@
 ﻿using Education.Domain.Entities.Auth;
+using Education.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
