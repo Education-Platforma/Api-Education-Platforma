@@ -24,3 +24,4 @@ namespace Education.Domain.Entities.Auth
         
     }
 }
+ 
