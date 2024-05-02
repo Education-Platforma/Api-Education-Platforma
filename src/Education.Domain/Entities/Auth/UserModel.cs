@@ -12,15 +12,14 @@ namespace Education.Domain.Entities.Auth
         public string FullName { get; set; }
         public int Exp { get; set; } = 0;
         public int Rank { get; set; } = 0;
-        public string Name { get; set; }
         public int LearningTime { get; set; } = 0;
         public int CompletedCourses { get; set; } = 0;
-        public string PhotoPath { get; set; }
+        public string? PhotoPath { get; set; }
         public string Country { get; set; }
-        public string County { get; set; }
         public DateTimeOffset JoinedData { get; set; } = DateTimeOffset.Now;
-        public bool IsActive { get; set; } = false;
+        public bool IsActive { get; set; } = true;
         public Guid GroupModelId { get; set; }
+        public virtual List<CourseModel> Courses { get; set; }
         public virtual GroupModel GroupModel { get; set; }
     }
 }
