@@ -21,7 +21,7 @@ namespace Education.Domain.Entities.Auth
         public Guid GroupModelId { get; set; }
         public virtual List<CourseModel> Courses { get; set; }
         public virtual GroupModel GroupModel { get; set; }
-        
+
     }
 }
  
