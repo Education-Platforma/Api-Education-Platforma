@@ -12,6 +12,8 @@ namespace Education.Domain.Entities
         public string Title { get; set; }
         public int ExpForWatching { get; set; }
         public  Guid VideoModelId { get; set; } 
+        public CourseModel Course { get; set; }
+        public Guid CourseId { get; set; }
         public virtual VideoModel VideoModel { get; set; }
     }
 }
