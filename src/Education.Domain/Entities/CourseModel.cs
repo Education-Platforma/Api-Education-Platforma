@@ -16,6 +16,7 @@ namespace Education.Domain.Entities
         public double Price { get; set; }
         public int SoldCount { get; set; }
         public string Language { get; set;}
+        //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
         public Guid UserId { get; set; }
         public UserModel User { get; set; }
         public Guid CouponId { get; set; }

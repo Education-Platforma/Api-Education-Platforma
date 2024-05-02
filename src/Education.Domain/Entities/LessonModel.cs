@@ -11,7 +11,8 @@ namespace Education.Domain.Entities
         public Guid Id { get; set; }
         public string Title { get; set; }
         public int ExpForWatching { get; set; }
-        public  Guid VideoModelId { get; set; } 
+        //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
+        public Guid VideoModelId { get; set; } 
         public CourseModel Course { get; set; }
         public Guid CourseId { get; set; }
         public virtual VideoModel VideoModel { get; set; }
