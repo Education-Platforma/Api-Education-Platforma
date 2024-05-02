@@ -14,5 +14,7 @@ namespace Education.Domain.Entities
         public string OptionC { get; set; }
         public char CorrectOption { get; set; }
         public int Exp {  get; set; }
+        public Guid QuizModelId { get; set; }
+        public virtual QuizModel QuizModel { get; set; }
     }
 } 

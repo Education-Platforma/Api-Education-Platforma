@@ -20,6 +20,8 @@ namespace Education.Domain.Entities.Auth
         public string County { get; set; }
         public DateTimeOffset JoinedData { get; set; } = DateTimeOffset.Now;
         public bool IsActive { get; set; } = false;
+        public Guid GroupModelId { get; set; }
+        public virtual GroupModel GroupModel { get; set; }
 
     }
 }
