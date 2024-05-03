@@ -11,7 +11,6 @@ namespace Education.Application.UseCases.CategoryCases.Commands
 {
     public class CreateCategoryCommand : IRequest<ResponseModel>
     {
-        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

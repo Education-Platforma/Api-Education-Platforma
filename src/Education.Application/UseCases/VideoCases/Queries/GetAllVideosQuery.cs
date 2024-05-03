@@ -10,7 +10,7 @@ namespace Education.Application.UseCases.VideoCases.Queries
 {
     public class GetAllVideosQuery:IRequest<List<VideoModel>>
     {
-        public string CourseName { get; set; }
+        public Guid CourseId { get; set; }
     }
 }
  

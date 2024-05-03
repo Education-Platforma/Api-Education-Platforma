@@ -38,20 +38,20 @@ namespace Education.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllMessage(GetAllMessagesQuery query)
+        [HttpGet("all")] // Route path: api/Message/all
+        public async Task<IActionResult> GetAllMessages()
         {
-            var result = await _mediator.Send(query);
+            var query = new GetAllMessagesQuery(); // Create query instance
+            var result = await _mediator.Send(query); // Send query
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetMessageById(GetMessageByIdQuery query)
+        [HttpGet("{id}")] // Route path: api/Message/{id}
+        public async Task<IActionResult> GetMessageById(Guid id)
         {
-            var result = await _mediator.Send(query);
+            var query = new GetMessageByIdQuery { Id = id }; // Create query instance with id
+            var result = await _mediator.Send(query); // Send query
             return Ok(result);
         }
-
-
     }
 }

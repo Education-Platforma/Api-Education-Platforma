@@ -11,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace Education.Application.UseCases.VideoCases.Handlers.QueryHandlers
 {
-    public class GetAllVideoByFolderNameQueryHandler : IRequestHandler<GetAllVideosQuery, List<VideoModel>>
+    public class GetAllVideosQueryHandler : IRequestHandler<Queries.GetAllVideosQuery, List<VideoModel>>
     {
         private readonly IEducationDbContext _context;
 
-        public GetAllVideoByFolderNameQueryHandler(IEducationDbContext context) 
+        public GetAllVideosQueryHandler(IEducationDbContext context) 
             => _context = context;
 
-        public async Task<List<VideoModel>> Handle(GetAllVideosQuery request, CancellationToken cancellationToken)
+        public async Task<List<VideoModel>> Handle(Queries.GetAllVideosQuery request, CancellationToken cancellationToken)
         {
             return (await _context.Courses
-                .FirstOrDefaultAsync(x => x.CourseName == request.CourseName))
+                .FirstOrDefaultAsync(x => x.Id == request.CourseId))
                 .Lessons.Select(x => x.VideoModel).ToList();
         }
     }

@@ -24,7 +24,6 @@ namespace Education.Application.UseCases.CouponCase.Handlers.CommandHandler
         {
             var coupon = new CouponModel()
             {
-                Id = Guid.NewGuid(),
                 CouponCode = request.CouponCode,
                 Discount = request.Discount
             };

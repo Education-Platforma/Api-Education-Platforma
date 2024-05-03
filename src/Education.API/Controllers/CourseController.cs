@@ -1,4 +1,5 @@
-﻿using Education.Application.UseCases.CourseCases.Queries;
+﻿using Education.Application.UseCases.CourseCases.Cammands;
+using Education.Application.UseCases.CourseCases.Queries;
 using Education.Domain.Entities;
 using Education.Domain.Entities.DemoModels;
 using MediatR;
@@ -20,6 +21,17 @@ namespace Education.API.Controllers
         {
             var res = await _mediatr.Send(new GetAllCourseQuery());
             return res;
+        }
+        [HttpPost]
+        public async Task<ResponseModel> CreateCourse(CreateCourseCommand command)
+        {
+            await _mediatr.Send(command);
+            return new ResponseModel
+            {
+                Message = "Created",
+                StatusCode = 201,
+                IsSuccess = true
+            };
         }
     }
 }

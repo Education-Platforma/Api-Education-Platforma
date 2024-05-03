@@ -1,4 +1,5 @@
-﻿using Education.Application.UseCases.CategoryCases.Commands;
+﻿// CategoryController.cs
+using Education.Application.UseCases.CategoryCases.Commands;
 using Education.Application.UseCases.CategoryCases.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -10,51 +11,46 @@ namespace Education.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private readonly IMediator _mediatr;
+        private readonly IMediator _mediator;
 
-        public CategoryController(IMediator mediatr)
+        public CategoryController(IMediator mediator)
         {
-            _mediatr = mediatr;
+            _mediator = mediator;
+        }
+
+        [HttpGet("all")] // Route path: api/Category/all
+        public async Task<IActionResult> GetCategories()
+        {
+            var result = await _mediator.Send(new GetAllCategoryQuery());
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")] // Route path: api/Category/{id}
+        public async Task<IActionResult> GetCategory(Guid id)
+        {
+            var result = await _mediator.Send(new GetCategoryByIdQuery() { Id = id});
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryCommand command)
         {
-            var result = await _mediatr.Send(command);
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryCommand command)
         {
-            var result = await _mediatr.Send(command);
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteCategory(DeleteCategoryCommand command)
         {
-            var result = await _mediatr.Send(command);  
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
-
-        [HttpGet]
-        public async Task<IActionResult> GetCategories(GetAllCategoryQuery query)
-        {
-            var result = await _mediatr.Send(query);
-            return Ok(result);
-        }
-
-
-        [HttpGet]
-        public async Task<IActionResult> GetCategory(GetCategoryByIdQuery query)
-        {
-            var result = await _mediatr.Send(query);
-            return Ok(result);
-        }
-
-
-
-
     }
 }

@@ -28,7 +28,6 @@ namespace Education.Application.Abstractions
 
         public DbSet<UserActivityModel> UserActivityModels { get; set; }
 
-
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     }

@@ -27,9 +27,8 @@ namespace Education.Application.UseCases.CourseCases.Handlers.CommandHandlers
                 Description = request.Description,
                 TotalTime = request.TotalTime,
                 Price = request.Price,
-                SoldCount = request.SoldCount,
                 Language = request.Language,
-                UserId = request.UserId.ToString(),
+                TeacherName = request.TeacherName,
                 CouponId = request.CouponId,
                 CategoryId = request.CategoryId,
             };

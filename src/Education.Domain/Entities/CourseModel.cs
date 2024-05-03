@@ -2,9 +2,6 @@
 using Education.Domain.Entities.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Education.Domain.Entities
 {
@@ -18,15 +15,12 @@ namespace Education.Domain.Entities
         public int SoldCount { get; set; } = 0;
         public string Language { get; set; }
         public CourseActivityModel Activity { get; set; } = CourseActivityModel.Blocked;
-        //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
-        public string UserId { get; set; }
+        public string TeacherName { get; set; }
         public Guid CouponId { get; set; }
         public Guid CategoryId { get; set; }
         public virtual CouponModel Coupon { get; set; }
-        public virtual UserModel User { get; set; }
         public virtual CategoryModel Category { get; set; }
-        public virtual CourseActivityModel CourseActivity { get; set; }
-        public virtual List<LessonModel> Lessons { get; set; }
-        public virtual List<CourseFeedbackModel> CourseFeedbacks { get; set; } // Renamed the property to avoid conflict
+        public virtual ICollection<LessonModel> Lessons { get; set; }
+        public virtual ICollection<CourseFeedbackModel> CourseFeedbacks { get; set; }
     }
 }

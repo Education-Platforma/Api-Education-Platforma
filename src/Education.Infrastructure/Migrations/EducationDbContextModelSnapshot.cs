@@ -197,9 +197,6 @@ namespace Education.Infrastructure.Migrations
                     b.Property<Guid>("CouponId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("CourseActivity")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CourseName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -218,11 +215,14 @@ namespace Education.Infrastructure.Migrations
                     b.Property<int>("SoldCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("TeacherName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<double>("TotalTime")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<string>("UserModelId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -231,7 +231,7 @@ namespace Education.Infrastructure.Migrations
 
                     b.HasIndex("CouponId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserModelId");
 
                     b.ToTable("Courses");
                 });
@@ -424,10 +424,10 @@ namespace Education.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("VideoFeadbackModelId")
+                    b.Property<Guid?>("VideoModelId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("VideoModelId")
+                    b.Property<Guid>("VideoModellId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -452,6 +452,9 @@ namespace Education.Infrastructure.Migrations
                     b.Property<string>("Length")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("VideoPath")
                         .IsRequired()
@@ -636,17 +639,13 @@ namespace Education.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
+                    b.HasOne("Education.Domain.Entities.Auth.UserModel", null)
                         .WithMany("Courses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserModelId");
 
                     b.Navigation("Category");
 
                     b.Navigation("Coupon");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.GroupModel", b =>

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Education.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class teadada : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,6 +72,7 @@ namespace Education.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     VideoPath = table.Column<string>(type: "text", nullable: false),
                     FolderName = table.Column<string>(type: "text", nullable: false),
+                    LessonId = table.Column<Guid>(type: "uuid", nullable: false),
                     Length = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -161,7 +162,7 @@ namespace Education.Infrastructure.Migrations
                     Country = table.Column<string>(type: "text", nullable: false),
                     JoinedData = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    GroupModelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    GroupModelId = table.Column<Guid>(type: "uuid", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -214,20 +215,19 @@ namespace Education.Infrastructure.Migrations
                     SoldCount = table.Column<int>(type: "integer", nullable: false),
                     Language = table.Column<string>(type: "text", nullable: false),
                     Activity = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    TeacherName = table.Column<string>(type: "text", nullable: false),
                     CouponId = table.Column<Guid>(type: "uuid", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CourseActivity = table.Column<int>(type: "integer", nullable: false)
+                    UserModelId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Courses_AspNetUsers_UserModelId",
+                        column: x => x.UserModelId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Courses_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -269,7 +269,7 @@ namespace Education.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Message = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    VideoFeadbackModelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    VideoModellId = table.Column<Guid>(type: "uuid", nullable: false),
                     VideoModelId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -492,9 +492,9 @@ namespace Education.Infrastructure.Migrations
                 column: "CouponId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_UserId",
+                name: "IX_Courses_UserModelId",
                 table: "Courses",
-                column: "UserId");
+                column: "UserModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_CourseId",
@@ -575,15 +575,14 @@ namespace Education.Infrastructure.Migrations
                 table: "AspNetUsers",
                 column: "GroupModelId",
                 principalTable: "Groups",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Courses_AspNetUsers_UserId",
+                name: "FK_Courses_AspNetUsers_UserModelId",
                 table: "Courses");
 
             migrationBuilder.DropTable(

@@ -39,16 +39,17 @@ namespace Education.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllQuestions(GetAllQuestionsQuery query)
+        public IActionResult GetAllQuestions()
         {
+            var query = new GetAllQuestionsQuery();
             var result = _mediatr.Send(query);
             return Ok(result);
         }
 
-
-        [HttpGet]
-        public IActionResult GetQuestionById(GetQuestionByIdQuery query)
+        [HttpGet("{id}")]
+        public IActionResult GetQuestionById(Guid id)
         {
+            var query = new GetQuestionByIdQuery { Id = id };
             var result = _mediatr.Send(query);
             return Ok(result);
         }
