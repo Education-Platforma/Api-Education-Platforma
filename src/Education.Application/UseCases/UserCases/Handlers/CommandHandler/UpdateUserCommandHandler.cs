@@ -37,7 +37,6 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
             }
 
             user.FullName = request.FullName;
-            user.Email = request.Email;
             user.Country = request.Counry;
 
             if (request.Photo != null)
@@ -66,7 +65,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
             return new ResponseModel
             {
                 Message = "User updated successfully",
-                StatusCode = 200,
+                StatusCode = 201,
                 IsSuccess = true
             };
         }
