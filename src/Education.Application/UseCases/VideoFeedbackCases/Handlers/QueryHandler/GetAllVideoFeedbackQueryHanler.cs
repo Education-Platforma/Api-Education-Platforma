@@ -22,7 +22,7 @@ namespace Education.Application.UseCases.VideoFeedbackCases.Handlers.QueryHandle
         public async Task<List<VideoFeedbackModel>> Handle(GetAllVideoFeedbacksQuery request, CancellationToken cancellationToken)
         {
             var videoFeedbacks = _context.VideoFeedbacks
-               .Where(vf => vf.VideoFeadbackModelId == request.VideoModel)
+               .Where(vf => vf.VideoModellId == request.VideoId)
                .ToList();
 
             return videoFeedbacks;
