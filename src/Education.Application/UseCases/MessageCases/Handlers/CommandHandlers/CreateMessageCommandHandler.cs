@@ -25,7 +25,7 @@ namespace Education.Application.UseCases.MessageCases.Handlers.CommandHandlers
                 Message = request.Message,
                 Date = request.Date,
                 GroupId = request.GoupId,
-                SenderId = request.SenderId
+                SenderId = request.SenderId.ToString()
             };
             await _context.Messages.AddAsync(res);
             await _context.SaveChangesAsync(cancellationToken);

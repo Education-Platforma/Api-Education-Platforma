@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Education.Application.UseCases.AuthServise;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Education.Application
     {
         public static IServiceCollection AddEducationApplication(this IServiceCollection services)
         {
+            services.AddScoped<IAuthServise,AuthServise>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             return services;
         }

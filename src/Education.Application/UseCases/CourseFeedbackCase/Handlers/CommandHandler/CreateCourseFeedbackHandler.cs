@@ -28,7 +28,7 @@ namespace Education.Application.UseCases.CourseFeedbackCase.Handlers.CommandHand
                 Id = Guid.NewGuid(),
                 Message = request.Message,
                 CourseId = request.CourseId,
-                UserId = request.UserId
+                UserId = request.UserId.ToString(),
             };
 
             await _context.CourseFeedbacks.AddAsync(feedback);
