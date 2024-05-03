@@ -22,16 +22,35 @@ namespace Education.API.Controllers
             var res = await _mediatr.Send(new GetAllCourseQuery());
             return res;
         }
+        [HttpGet]
+        public async Task<ResponseModel> GetCourseById(UpdateCourseCommand command)
+        {
+            var res = await _mediatr.Send(command);
+            return res;
+        }
+        [HttpGet]
+        public async Task<CourseModel> GetCourseByTeacherName(string teacherName)
+        {
+            var res = await _mediatr.Send(new GetCourseByTeacherNameQuery() { TeacherName = teacherName});
+            return res;
+        }
         [HttpPost]
         public async Task<ResponseModel> CreateCourse(CreateCourseCommand command)
         {
-            await _mediatr.Send(command);
-            return new ResponseModel
-            {
-                Message = "Created",
-                StatusCode = 201,
-                IsSuccess = true
-            };
+            return await _mediatr.Send(command);
+
+        }
+        [HttpPut]
+        public async Task<ResponseModel> UpdateCourse(UpdateCourseCommand command)
+        {
+            return await _mediatr.Send(command);
+
+        }
+        [HttpDelete]
+        public async Task<ResponseModel> DeleteCourse(DeleteCourseCommand command)
+        {
+           return await _mediatr.Send(command);
+            
         }
     }
 }
