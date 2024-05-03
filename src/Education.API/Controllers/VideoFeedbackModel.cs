@@ -1,4 +1,7 @@
-﻿using Education.Domain.Entities;
+﻿using Education.Application.UseCases.VideoFeedbackCases.Commands;
+using Education.Application.UseCases.VideoFeedbackCases.Queries;
+using Education.Domain.Entities;
+using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +16,33 @@ namespace Education.API.Controllers
         {
             _mediatr = mediator;
         }
-
         [HttpGet]
-        public async Task<List<VideoFeedbackModel>> GetAllFeedbacks(Guid VideoId)
+        public async Task<List<Education.Domain.Entities.VideoFeedbackModel>> GetAllFeedbacks(Guid VideoId)
         {
-            throw new NotImplementedException();
+            return await _mediatr.Send(new GetAllVideoFeedbacksQuery { VideoId = VideoId });
+        }
+        [HttpPut]
+        public async Task<ResponseModel> UpdateVideoFeedback(UpdateVideoFeedbackCommand command)
+        {
+            var res = await _mediatr.Send(command);
+            return new ResponseModel()
+            {
+                Message = "Succesfully updated",
+                StatusCode = 201,
+                IsSuccess = true
+            };
+        }
+        [HttpDelete]
+        public async Task<ResponseModel> DeleteVideoFeedback(Guid id)
+        {
+            await _mediatr.Send(new DeleteVideoFeedbackCommand { Id = id });
+
+            return new ResponseModel()
+            {
+                Message = "Succesfully deleted",
+                StatusCode = 201,
+                IsSuccess = true
+            };
         }
     }
 }

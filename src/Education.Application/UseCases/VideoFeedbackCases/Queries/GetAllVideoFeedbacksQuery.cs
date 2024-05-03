@@ -10,6 +10,6 @@ namespace Education.Application.UseCases.VideoFeedbackCases.Queries
 {
     public class GetAllVideoFeedbacksQuery:IRequest<List<VideoFeedbackModel>>
     {
-        public Guid VideoModel {  get; set; }
+        public Guid VideoId {  get; set; }
     }
 }

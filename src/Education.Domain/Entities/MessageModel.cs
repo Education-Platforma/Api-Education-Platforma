@@ -11,7 +11,7 @@ namespace Education.Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Message { get; set; }
-        public DateTimeOffset Date { get; set; }
+        public DateTimeOffset Date { get; set; } = DateTimeOffset.UtcNow;
         public Guid GroupId { get; set; }
         public string SenderId { get; set; }
         public virtual GroupModel Group { get; set; }
