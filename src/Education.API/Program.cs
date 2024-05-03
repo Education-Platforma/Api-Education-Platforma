@@ -68,7 +68,7 @@ using (var scope = app.Services.CreateScope())
     {
         var user = new UserModel()
         {
-            Id = "ab0cd123-e456-789f-abcd-ef0123456789",
+            Id = Guid.NewGuid(),
             UserName = "Insoniyat",
             FullName = "Brat",
             Country = "Uzbekistan",

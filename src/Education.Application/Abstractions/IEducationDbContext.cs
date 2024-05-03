@@ -27,7 +27,7 @@ namespace Education.Application.Abstractions
         public DbSet<GroupModel> Groups { get; set; }
 
         public DbSet<UserActivityModel> UserActivityModels { get; set; }
-
+        public DbSet<TeacherModel> Teachers { get; set; }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 

@@ -17,6 +17,22 @@ namespace Education.API.Controllers
             _mediatr = mediatr;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserActivity(Guid id)
+        {
+            var query = new GetUserActivityQuery { Id = id };
+            var result = await _mediatr.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllUsersActivity()
+        {
+            var query = new GetAllUsersActivityQuery();
+            var result = await _mediatr.Send(query);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddUserActivity(CreateUserActivityCommand command)
         {
@@ -35,20 +51,6 @@ namespace Education.API.Controllers
         public async Task<IActionResult> DeleteUserActivity(DeleteUserActivityCommand command)
         {
             var result = await _mediatr.Send(command);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetUserActivity(GetUserActivityQuery query)
-        {
-            var result = await _mediatr.Send(query);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetallUsersActivity(GetAllUsersActivityQuery query)
-        {
-            var result = await _mediatr.Send(query);
             return Ok(result);
         }
 

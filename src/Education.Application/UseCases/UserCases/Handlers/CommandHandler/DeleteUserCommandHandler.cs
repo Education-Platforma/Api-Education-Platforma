@@ -23,7 +23,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
 
         public async Task<ResponseModel> Handle(DeleteUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == request.Id.ToString());
+            var user = _context.Users.FirstOrDefault(x => x.Id == request.Id);
             if (user == null)
             {
                 return new ResponseModel

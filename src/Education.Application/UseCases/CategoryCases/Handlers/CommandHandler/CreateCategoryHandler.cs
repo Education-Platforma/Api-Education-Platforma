@@ -28,7 +28,6 @@ namespace Education.Application.UseCases.CategoryCases.Handlers.CommandHandler
                 var category = new CategoryModel()
                 {
                     Name = request.Name,
-                    Id = request.Id
                 };
 
                 await _context.Categories.AddAsync(category);

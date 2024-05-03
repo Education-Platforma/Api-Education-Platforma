@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Education.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class testadd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -72,6 +72,7 @@ namespace Education.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     VideoPath = table.Column<string>(type: "text", nullable: false),
                     FolderName = table.Column<string>(type: "text", nullable: false),
+                    LessonId = table.Column<Guid>(type: "uuid", nullable: false),
                     Length = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -161,7 +162,7 @@ namespace Education.Infrastructure.Migrations
                     Country = table.Column<string>(type: "text", nullable: false),
                     JoinedData = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
-                    GroupModelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    GroupModelId = table.Column<Guid>(type: "uuid", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -203,43 +204,20 @@ namespace Education.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
+                name: "Teachers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CourseName = table.Column<string>(type: "text", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
-                    TotalTime = table.Column<double>(type: "double precision", nullable: false),
-                    Price = table.Column<double>(type: "double precision", nullable: false),
-                    SoldCount = table.Column<int>(type: "integer", nullable: false),
-                    Language = table.Column<string>(type: "text", nullable: false),
-                    Activity = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false),
-                    CouponId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    CourseActivity = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_AspNetUsers_UserId",
+                        name: "FK_Teachers_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Courses_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Courses_Coupons_CouponId",
-                        column: x => x.CouponId,
-                        principalTable: "Coupons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -269,7 +247,7 @@ namespace Education.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Message = table.Column<string>(type: "text", nullable: false),
                     UserId = table.Column<string>(type: "text", nullable: false),
-                    VideoFeadbackModelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    VideoModellId = table.Column<Guid>(type: "uuid", nullable: false),
                     VideoModelId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -286,6 +264,51 @@ namespace Education.Infrastructure.Migrations
                         column: x => x.VideoModelId,
                         principalTable: "Videos",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CourseName = table.Column<string>(type: "text", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
+                    TotalTime = table.Column<double>(type: "double precision", nullable: false),
+                    Price = table.Column<double>(type: "double precision", nullable: false),
+                    SoldCount = table.Column<int>(type: "integer", nullable: false),
+                    Language = table.Column<string>(type: "text", nullable: false),
+                    Activity = table.Column<int>(type: "integer", nullable: false),
+                    CouponId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TeacherId = table.Column<string>(type: "text", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserModelId = table.Column<string>(type: "text", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Courses_AspNetUsers_UserModelId",
+                        column: x => x.UserModelId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Courses_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Courses_Coupons_CouponId",
+                        column: x => x.CouponId,
+                        principalTable: "Coupons",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Courses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teachers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -492,9 +515,14 @@ namespace Education.Infrastructure.Migrations
                 column: "CouponId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_UserId",
+                name: "IX_Courses_TeacherId",
                 table: "Courses",
-                column: "UserId");
+                column: "TeacherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_UserModelId",
+                table: "Courses",
+                column: "UserModelId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_CourseId",
@@ -530,6 +558,11 @@ namespace Education.Infrastructure.Migrations
                 name: "IX_Quizes_CourseId",
                 table: "Quizes",
                 column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teachers_UserId",
+                table: "Teachers",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserActivityModels_UserId",
@@ -575,16 +608,19 @@ namespace Education.Infrastructure.Migrations
                 table: "AspNetUsers",
                 column: "GroupModelId",
                 principalTable: "Groups",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Courses_AspNetUsers_UserId",
+                name: "FK_Courses_AspNetUsers_UserModelId",
                 table: "Courses");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Teachers_AspNetUsers_UserId",
+                table: "Teachers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -645,6 +681,9 @@ namespace Education.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Coupons");
+
+            migrationBuilder.DropTable(
+                name: "Teachers");
         }
     }
 }

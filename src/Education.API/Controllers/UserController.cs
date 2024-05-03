@@ -18,7 +18,7 @@ namespace Education.API.Controllers
             _mediatr = mediator;
         }
         [HttpGet]
-        [Authorize(Roles ="Admin")]
+      //  [Authorize(Roles ="Admin")]
         public async Task<List<UserModel>> GetAllUsers()
         {
             var res = await _mediatr.Send(new GetAllUsersQuery());

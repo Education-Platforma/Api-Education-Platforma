@@ -18,6 +18,21 @@ namespace Education.API.Controllers
             _mediatr = mediatr;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAllQuizzes()
+        {
+            var query = new GetAllQuizQuery();
+            var result = await _mediatr.Send(query);
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetQuizById(Guid id)
+        {
+            var query = new GetByIdQuizQuery { Id = id };
+            var result = await _mediatr.Send(query);
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateQuiz(CreateQuizCommand command)
         {
@@ -41,19 +56,6 @@ namespace Education.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllQuizzes(GetAllQuizQuery query)
-        {
-            var result = await _mediatr.Send(query);
-            return Ok(result);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetQuizById(GetByIdQuizQuery query)
-        {
-            var result = await _mediatr.Send(query);
-            return Ok(result);
-        }
 
     }
 }

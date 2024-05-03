@@ -25,7 +25,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
 
         public async Task<ResponseModel> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == request.Id.ToString());
+            var user = _context.Users.FirstOrDefault(x => x.Id == request.Id);
             if (user == null)
             {
                 return new ResponseModel

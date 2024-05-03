@@ -197,9 +197,6 @@ namespace Education.Infrastructure.Migrations
                     b.Property<Guid>("CouponId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("CourseActivity")
-                        .HasColumnType("integer");
-
                     b.Property<string>("CourseName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -218,11 +215,14 @@ namespace Education.Infrastructure.Migrations
                     b.Property<int>("SoldCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("TeacherId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<double>("TotalTime")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
+                    b.Property<string>("UserModelId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -231,7 +231,9 @@ namespace Education.Infrastructure.Migrations
 
                     b.HasIndex("CouponId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("TeacherId");
+
+                    b.HasIndex("UserModelId");
 
                     b.ToTable("Courses");
                 });
@@ -387,6 +389,21 @@ namespace Education.Infrastructure.Migrations
                     b.ToTable("Statistics");
                 });
 
+            modelBuilder.Entity("Education.Domain.Entities.TeacherModel", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Teachers");
+                });
+
             modelBuilder.Entity("Education.Domain.Entities.UserActivityModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -424,10 +441,10 @@ namespace Education.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("VideoFeadbackModelId")
+                    b.Property<Guid?>("VideoModelId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("VideoModelId")
+                    b.Property<Guid>("VideoModellId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -452,6 +469,9 @@ namespace Education.Infrastructure.Migrations
                     b.Property<string>("Length")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid>("LessonId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("VideoPath")
                         .IsRequired()
@@ -636,17 +656,21 @@ namespace Education.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
+                    b.HasOne("Education.Domain.Entities.TeacherModel", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Education.Domain.Entities.Auth.UserModel", null)
+                        .WithMany("Courses")
+                        .HasForeignKey("UserModelId");
 
                     b.Navigation("Category");
 
                     b.Navigation("Coupon");
 
-                    b.Navigation("User");
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.GroupModel", b =>
@@ -718,6 +742,15 @@ namespace Education.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Education.Domain.Entities.TeacherModel", b =>
+                {
+                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.UserActivityModel", b =>
@@ -819,6 +852,11 @@ namespace Education.Infrastructure.Migrations
             modelBuilder.Entity("Education.Domain.Entities.QuizModel", b =>
                 {
                     b.Navigation("Questions");
+                });
+
+            modelBuilder.Entity("Education.Domain.Entities.TeacherModel", b =>
+                {
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.VideoModel", b =>

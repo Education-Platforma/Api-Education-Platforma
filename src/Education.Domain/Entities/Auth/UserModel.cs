@@ -10,7 +10,7 @@ namespace Education.Domain.Entities.Auth
 {
     public class UserModel : IdentityUser
     {
-        public string Id {  get; set; }
+        public Guid Id {  get; set; } = Guid.NewGuid();
         public string FullName { get; set; }
         public int Exp { get; set; } = 0;
         public int Rank { get; set; } = 0;
