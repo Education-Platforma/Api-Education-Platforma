@@ -15,11 +15,10 @@ namespace Education.Domain.Entities
         public int SoldCount { get; set; } = 0;
         public string Language { get; set; }
         public CourseActivityModel Activity { get; set; } = CourseActivityModel.Blocked;
+        public string TeacherName { get; set; }
         public Guid CouponId { get; set; }
-        public string TeacherId { get; set; } // Updated property name
         public Guid CategoryId { get; set; }
         public virtual CouponModel Coupon { get; set; }
-        public virtual TeacherModel Teacher { get; set; } // Navigation property
         public virtual CategoryModel Category { get; set; }
         public virtual ICollection<LessonModel> Lessons { get; set; }
         public virtual ICollection<CourseFeedbackModel> CourseFeedbacks { get; set; }

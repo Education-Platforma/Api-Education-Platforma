@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Education.Infrastructure.Migrations
 {
     [DbContext(typeof(EducationDbContext))]
-    [Migration("20240503215321_testadd")]
-    partial class testadd
+    [Migration("20240503232637_teadada")]
+    partial class teadada
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -218,7 +218,7 @@ namespace Education.Infrastructure.Migrations
                     b.Property<int>("SoldCount")
                         .HasColumnType("integer");
 
-                    b.Property<string>("TeacherId")
+                    b.Property<string>("TeacherName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -233,8 +233,6 @@ namespace Education.Infrastructure.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("CouponId");
-
-                    b.HasIndex("TeacherId");
 
                     b.HasIndex("UserModelId");
 
@@ -390,21 +388,6 @@ namespace Education.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Statistics");
-                });
-
-            modelBuilder.Entity("Education.Domain.Entities.TeacherModel", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Teachers");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.UserActivityModel", b =>
@@ -659,12 +642,6 @@ namespace Education.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Education.Domain.Entities.TeacherModel", "Teacher")
-                        .WithMany("Courses")
-                        .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Education.Domain.Entities.Auth.UserModel", null)
                         .WithMany("Courses")
                         .HasForeignKey("UserModelId");
@@ -672,8 +649,6 @@ namespace Education.Infrastructure.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Coupon");
-
-                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.GroupModel", b =>
@@ -745,15 +720,6 @@ namespace Education.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("Education.Domain.Entities.TeacherModel", b =>
-                {
-                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.UserActivityModel", b =>
@@ -855,11 +821,6 @@ namespace Education.Infrastructure.Migrations
             modelBuilder.Entity("Education.Domain.Entities.QuizModel", b =>
                 {
                     b.Navigation("Questions");
-                });
-
-            modelBuilder.Entity("Education.Domain.Entities.TeacherModel", b =>
-                {
-                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.VideoModel", b =>

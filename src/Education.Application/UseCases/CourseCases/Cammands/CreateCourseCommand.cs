@@ -16,7 +16,7 @@ namespace Education.Application.UseCases.CourseCases.Cammands
         public double TotalTime { get; set; }
         public double Price { get; set; }
         public string Language { get; set; }
-        public Guid TeacherId { get; set; }
+        public string TeacherName { get; set; }
         public Guid CouponId { get; set; }
         public Guid CategoryId { get; set; }
     }
