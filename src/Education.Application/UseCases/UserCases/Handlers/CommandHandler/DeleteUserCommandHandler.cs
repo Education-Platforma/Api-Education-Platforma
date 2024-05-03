@@ -50,7 +50,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
             return new ResponseModel
             {
                 Message = "User deleted successfully",
-                StatusCode = 200,
+                StatusCode = 201,
                 IsSuccess = true
             };
         }
