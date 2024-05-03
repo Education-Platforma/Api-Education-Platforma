@@ -14,10 +14,9 @@ namespace Education.Application.UseCases.UserCases.Commands
     {
         public Guid Id { get; set; }
         public string FullName { get; set; }
-        public string Email { get; set; }
         public string Password { get; set; }
 
-        public IFormFile? Photo { get; set; }
+        public IFormFile Photo { get; set; }
         public string Counry { get; set; }
         public string PhoneNumber { get; set; }
     }
