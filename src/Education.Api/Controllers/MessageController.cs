@@ -1,5 +1,6 @@
 ﻿using Education.Application.UseCases.MessageCases.Command;
 using Education.Application.UseCases.MessageCases.Queries;
+using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,41 +18,39 @@ namespace Education.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateMessage(CreateMessageCommand command)
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllMessages()
         {
-            var result = await _mediator.Send(command);
+            var query = new GetAllMessagesQuery(); 
+            var result = await _mediator.Send(query); 
             return Ok(result);
+        }
+
+        [HttpGet("{id}")] 
+        public async Task<IActionResult> GetMessageById(Guid id)
+        {
+            var query = new GetMessageByIdQuery { Id = id }; 
+            var result = await _mediator.Send(query); 
+            return Ok(result);
+        }
+        [HttpPost]
+        public async Task<ResponseModel> CreateMessage(CreateMessageCommand command)
+        {
+            return await _mediator.Send(command);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateMessage(UpdateMessageCommand command)
+        public async Task<ResponseModel> UpdateMessage(UpdateMessageCommand command)
         {
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            return await _mediator.Send(command);
+           
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteMessage(DeleteMessageCommand command)
+        public async Task<ResponseModel> DeleteMessage(DeleteMessageCommand command)
         {
-            var result = await _mediator.Send(command);
-            return Ok(result);
+            return await _mediator.Send(command);
         }
 
-        [HttpGet("all")] // Route path: api/Message/all
-        public async Task<IActionResult> GetAllMessages()
-        {
-            var query = new GetAllMessagesQuery(); // Create query instance
-            var result = await _mediator.Send(query); // Send query
-            return Ok(result);
-        }
-
-        [HttpGet("{id}")] // Route path: api/Message/{id}
-        public async Task<IActionResult> GetMessageById(Guid id)
-        {
-            var query = new GetMessageByIdQuery { Id = id }; // Create query instance with id
-            var result = await _mediator.Send(query); // Send query
-            return Ok(result);
-        }
     }
 }
