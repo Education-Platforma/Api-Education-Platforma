@@ -11,7 +11,6 @@ builder.Services.AddCors(options =>
     options.AddPolicy("_myAllowSpecificOrigins",
         builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 });
-
 builder.Services.AddEducationApplication();
 builder.Services.AddEducationINfrastructure(builder.Configuration);
 
@@ -32,9 +31,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("_myAllowSpecificOrigins");
-
-// Add CORS middleware before authentication and authorization
 app.UseCors("_myAllowSpecificOrigins");
 
 app.UseAuthentication();
@@ -68,7 +64,7 @@ using (var scope = app.Services.CreateScope())
     {
         var user = new UserModel()
         {
-            Id = "ab0cd123-e456-789f-abcd-ef0123456789",
+            Id = "f8d384e6-3a6a-4a9b-b4a3-2a4d6f8c9e12",
             UserName = "Insoniyat",
             FullName = "Brat",
             Country = "Uzbekistan",
@@ -78,9 +74,9 @@ using (var scope = app.Services.CreateScope())
             EmailConfirmed = true
         };
 
-        var res = await userManager.CreateAsync(user, password);
+        var res =  await userManager.CreateAsync(user, password);
 
-        var res1 = await userManager.AddToRoleAsync(user, "Admin");
+        var res1 =  await userManager.AddToRoleAsync(user, "Admin");
 
     }
 }

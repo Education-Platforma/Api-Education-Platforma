@@ -13,9 +13,9 @@ namespace Education.Domain.Entities
         public Guid Id { get; set; } = Guid.NewGuid();
         public string CourseName { get; set; }
         public string Description { get; set; }
-        public double TotalTime { get; set; }
+        public double TotalTime { get; set; } = 0;
         public double Price { get; set; }
-        public int SoldCount { get; set; }
+        public int SoldCount { get; set; } = 0;
         public string Language { get; set; }
         public CourseActivityModel Activity { get; set; } = CourseActivityModel.Blocked;
         //Pasdagi ma'lumotlargaCRUD amali bo'lmaydi
