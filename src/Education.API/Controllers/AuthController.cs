@@ -9,7 +9,7 @@ namespace Education.API.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AuthController : ControllerBase
+    public class AuthController : ControllerBase 
     {
         private readonly UserManager<UserModel> _userManager;
         private readonly IAuthServise _authService;
