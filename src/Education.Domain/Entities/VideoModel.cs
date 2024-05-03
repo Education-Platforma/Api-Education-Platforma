@@ -10,7 +10,8 @@ namespace Education.Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string VideoPath { get; set; }
+        public string FolderName { get; set; }
         public string Length { get; set; }
-        public virtual List<VideoFeedbackModel> Feedbacs { get; set; }
+        public virtual List<VideoFeedbackModel> Feedbacks { get; set; }
     }
 }
