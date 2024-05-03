@@ -29,7 +29,7 @@ namespace Education.Application.UseCases.CourseCases.Handlers.CommandHandlers
                 Price = request.Price,
                 SoldCount = request.SoldCount,
                 Language = request.Language,
-                UserId = request.UserId,
+                UserId = request.UserId.ToString(),
                 CouponId = request.CouponId,
                 CategoryId = request.CategoryId,
             };

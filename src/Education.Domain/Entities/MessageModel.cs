@@ -13,7 +13,7 @@ namespace Education.Domain.Entities
         public string Message { get; set; }
         public DateTimeOffset Date { get; set; }
         public Guid GroupId { get; set; }
-        public Guid SenderId { get; set; }
+        public string SenderId { get; set; }
         public virtual GroupModel Group { get; set; }
         public virtual UserModel Sender { get; set; }
     }

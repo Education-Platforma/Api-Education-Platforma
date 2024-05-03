@@ -12,7 +12,7 @@ namespace Education.Domain.Entities
 
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Message { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
         public Guid CourseId { get; set; }
         public virtual CourseModel Course { get; set; }
         public virtual UserModel User { get; set; }

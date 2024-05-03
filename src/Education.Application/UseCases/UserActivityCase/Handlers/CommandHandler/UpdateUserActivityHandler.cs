@@ -35,7 +35,7 @@ namespace Education.Application.UseCases.UserActivityCase.Handlers.CommandHandle
             }
 
             userActivity.Date = request.Date;
-            userActivity.UserId = request.UserId;
+            userActivity.UserId = request.UserId.ToString();
             userActivity.WatchedVideosByMinute = request.WatchedVideosByMinute;
 
             _context.UserActivityModels.Update(userActivity);

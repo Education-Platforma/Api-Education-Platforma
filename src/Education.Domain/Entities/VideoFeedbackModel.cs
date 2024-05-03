@@ -11,7 +11,7 @@ namespace Education.Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Message { get; set; }
-        public Guid UserId {  get; set; }
+        public string UserId {  get; set; }
         public Guid VideoFeadbackModelId { get; set; }
         public virtual UserModel User { get; set; }
     }
