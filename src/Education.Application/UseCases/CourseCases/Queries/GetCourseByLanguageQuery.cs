@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Education.Application.UseCases.CourseCases.Queries
 {
-    public class GetCourseByTeacherNameQuery : IRequest<List<CourseModel>>
+    public class GetCourseByLanguageQuery:IRequest<List<CourseModel>>
     {
-        public string TeacherName { get; set; }
+        public string Language { get; set; }
     }
 }
