@@ -25,66 +25,31 @@ namespace Education.API.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Ok(new ResponseModel()
-                {
-                    IsSuccess = false,
-                    Message = "Invalid input data",
-                    StatusCode = 400
-                });
+                throw new Exception();
             }
-
-            var existingUserByEmail = await _userManager.FindByEmailAsync(register.Email);
-            if (existingUserByEmail != null)
-            {
-                return Ok(new ResponseModel()
-                {
-                    IsSuccess = false,
-                    Message = "Email is already taken",
-                    StatusCode = 409
-                });
-            }
-
-            var existingUserByUsername = await _userManager.FindByNameAsync(register.Username);
-            if (existingUserByUsername != null)
-            {
-                return Ok(new ResponseModel()
-                {
-                    IsSuccess = false,
-                    Message = "Username is already taken",
-                    StatusCode = 409
-                });
-            }
-
             var user = new UserModel()
             {
                 FullName = register.FullName,
                 Country = register.Country,
                 UserName = register.Username,
                 Email = register.Email,
+                
             };
 
             var result = await _userManager.CreateAsync(user, register.Password);
 
             if (!result.Succeeded)
-            {
-                return Ok(new ResponseModel()
-                {
-                    IsSuccess = false,
-                    Message = "Failed to create user",
-                    StatusCode = 500
-                });
-            }
+                throw new Exception();
 
             await _userManager.AddToRoleAsync(user, "User");
 
             return Ok(new ResponseModel()
             {
                 IsSuccess = true,
-                Message = "User created successfully",
+                Message = "Successfully Created",
                 StatusCode = 201
             });
         }
-
         [HttpPost]
         public async Task<IActionResult> Login(LoginDTO login)
         {
