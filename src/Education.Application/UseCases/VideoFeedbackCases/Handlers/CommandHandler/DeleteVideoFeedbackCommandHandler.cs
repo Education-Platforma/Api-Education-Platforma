@@ -1,5 +1,6 @@
 ﻿using Education.Application.Abstractions;
 using Education.Application.UseCases.VideoCases.Command;
+using Education.Application.UseCases.VideoFeedbackCases.Commands;
 using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -12,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace Education.Application.UseCases.VideoFeedbackCases.Handlers.CommandHandler
 {
-    public class DeleteVideoFeedbackCommandHandler : IRequestHandler<DeleteVideoCommand, ResponseModel>
+    public class DeleteVideoFeedbackCommandHandler : IRequestHandler<DeleteVideoFeedbackCommand, ResponseModel>
     {
         private readonly IEducationDbContext _context;
         public DeleteVideoFeedbackCommandHandler(IEducationDbContext context)
         {
             _context = context;
         }
-        public async Task<ResponseModel> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel> Handle(DeleteVideoFeedbackCommand request, CancellationToken cancellationToken)
         {
             var res = await _context.VideoFeedbacks.FirstOrDefaultAsync(x => x.Id == request.Id);
             if(res == null)

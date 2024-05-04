@@ -1,45 +1,68 @@
 ﻿using Education.Application.Abstractions;
-using Education.Application.UseCases.VideoCases.Command;
 using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.AspNetCore.Hosting;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Education.Application.UseCases.VideoCases.Handlers.CommandsHandlers
+namespace Education.Application.UseCases.VideoCases.Command
 {
     public class DeleteVideoCommandHandler : IRequestHandler<DeleteVideoCommand, ResponseModel>
     {
         private readonly IEducationDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+
         public DeleteVideoCommandHandler(IEducationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
         }
+
         public async Task<ResponseModel> Handle(DeleteVideoCommand request, CancellationToken cancellationToken)
         {
             try
             {
-                var filePath = Path.Combine(_webHostEnvironment.WebRootPath, request.FolderName, request.Id.ToString());
+                var videoToDelete = _context.Videos.FirstOrDefault(v => v.LessonId == request.LessonId);
 
-                if (File.Exists(filePath))
+                if (videoToDelete != null)
                 {
-                    File.Delete(filePath);
+                    var filePath = Path.Combine(_webHostEnvironment.WebRootPath, videoToDelete.VideoPath);
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
 
-                    
-                    return new ResponseModel { IsSuccess = true, Message = "Video deleted successfully", StatusCode = 200 };
+                  var res = _context.Videos.Remove(videoToDelete);
+                    await _context.SaveChangesAsync(cancellationToken);
+
+                    return new ResponseModel()
+                    {
+                        Message = "Video deleted successfully",
+                        StatusCode = 200,
+                        IsSuccess = true
+                    };
                 }
                 else
                 {
-                    return new ResponseModel { IsSuccess = false, Message = "Video not found", StatusCode = 404 };
+                    return new ResponseModel()
+                    {
+                        Message = "Video with the provided LessonId not found",
+                        StatusCode = 404,
+                        IsSuccess = false
+                    };
                 }
             }
             catch (Exception ex)
             {
-                return new ResponseModel { IsSuccess = false, Message = "An error occurred: " + ex.Message, StatusCode = 500 };
+                return new ResponseModel()
+                {
+                    Message = "Failed to delete video: " + ex.Message,
+                    StatusCode = 500,
+                    IsSuccess = false
+                };
             }
         }
     }

@@ -11,8 +11,7 @@ namespace Education.Application.UseCases.VideoCases.Command
 {
     public class UpdateVideoCommand:IRequest<ResponseModel>
     {
-        public Guid Id { get; set; }
+        public Guid LessonId { get; set; }
         public IFormFile Video { get; set; }
-        public string FolderName { get; set; }
     }
 }

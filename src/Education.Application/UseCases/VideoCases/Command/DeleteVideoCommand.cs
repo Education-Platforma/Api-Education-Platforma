@@ -10,7 +10,6 @@ namespace Education.Application.UseCases.VideoCases.Command
 {
     public class DeleteVideoCommand:IRequest<ResponseModel>
     {
-        public Guid Id { get; set; }
-        public string FolderName { get; set; }
+        public Guid LessonId { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Education.Domain.Entities.DemoModels;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,9 @@ namespace Education.Application.UseCases.LessonCase.Commands
 {
     public class CreateLessonCommand : IRequest<ResponseModel>
     {
+        public IFormFile Video { get; set; }
+        public Guid CourseId { get; set; }
         public string Title { get; set; }
         public int ExpForWatching { get; set; }
-        public Guid VideoModelId { get; set; }
-        public Guid CourseId { get; set; }
     }
 }

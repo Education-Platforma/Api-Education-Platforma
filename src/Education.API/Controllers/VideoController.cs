@@ -1,5 +1,4 @@
 ﻿using Education.Application.UseCases.VideoCases.Command;
-using Education.Application.UseCases.VideoCases.Handlers.QueryHandlers;
 using Education.Application.UseCases.VideoCases.Queries;
 using Education.Domain.Entities;
 using Education.Domain.Entities.DemoModels;
@@ -21,10 +20,16 @@ namespace Education.API.Controllers
         [HttpGet]
         public async Task<List<VideoModel>> GetAllVideos(Guid courseId)
         {
-            return await _mediatr.Send(new GetAllVideosQuery() { CourseId = courseId });
+            return await _mediatr.Send(new GetAllVideosByCourseIdQuery() { CourseId = courseId});
         }
+        [HttpGet]
+        public async Task<VideoModel> GetVideoByLessonId(Guid lessonId)
+        {
+            return await _mediatr.Send(new GetVideoByLessonIdQuery() { LessonId = lessonId });
+        }
+       
         [HttpPost]
-        public async Task<ResponseModel> CreateVideo(CreateVideoCommand command)
+        public async Task<ResponseModel> CreateVideo([FromForm] CreateVideoCommand command)
         {
             var res = await _mediatr.Send(command);
             return new ResponseModel()
@@ -33,6 +38,11 @@ namespace Education.API.Controllers
                 StatusCode = 201,
                 IsSuccess = true
             };
+        }
+        [HttpDelete]
+        public async Task<ResponseModel> DeleteVideo(Guid lessonId)
+        {
+            return await _mediatr.Send(new DeleteVideoCommand() { LessonId = lessonId }); ;
         }
     }
 }

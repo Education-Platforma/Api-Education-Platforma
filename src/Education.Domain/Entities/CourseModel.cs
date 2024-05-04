@@ -16,11 +16,13 @@ namespace Education.Domain.Entities
         public string Language { get; set; }
         public CourseActivityModel Activity { get; set; } = CourseActivityModel.Blocked;
         public string TeacherName { get; set; }
-        public Guid CouponId { get; set; }
+        public Guid? CouponId { get; set; }
         public Guid CategoryId { get; set; }
+        public Guid? WishListId { get; set; }
         public virtual CouponModel Coupon { get; set; }
         public virtual CategoryModel Category { get; set; }
         public virtual ICollection<LessonModel> Lessons { get; set; }
+        public virtual WishList WishList { get; set; }
         public virtual ICollection<CourseFeedbackModel> CourseFeedbacks { get; set; }
     }
 }

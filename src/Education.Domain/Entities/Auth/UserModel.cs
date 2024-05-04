@@ -21,8 +21,10 @@ namespace Education.Domain.Entities.Auth
         public DateTimeOffset JoinedData { get; set; } = DateTimeOffset.UtcNow;
         public bool IsActive { get; set; } = true;
         public Guid? GroupModelId { get; set; }
+        public Guid? WishListId { get; set; }
         public virtual List<CourseModel> Courses { get; set; }
         public virtual GroupModel GroupModel { get; set; }
+        public virtual WishList WishList { get; set; }
 
     }
 }
