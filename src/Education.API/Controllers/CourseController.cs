@@ -29,9 +29,15 @@ namespace Education.API.Controllers
             return res;
         }
         [HttpGet]
-        public async Task<CourseModel> GetCourseByTeacherName(string teacherName)
+        public async Task<List<CourseModel>> GetCourseByTeacherName(string teacherName)
         {
             var res = await _mediatr.Send(new GetCourseByTeacherNameQuery() { TeacherName = teacherName});
+            return res;
+        }
+        [HttpGet]
+        public async Task<List<CourseModel>> GetCourseByLanguage(string language)
+        {
+            var res = await _mediatr.Send(new GetCourseByLanguageQuery() { Language = language });
             return res;
         }
         [HttpPost]
