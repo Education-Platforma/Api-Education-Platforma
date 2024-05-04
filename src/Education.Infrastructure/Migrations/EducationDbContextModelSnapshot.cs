@@ -126,8 +126,6 @@ namespace Education.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.HasIndex("WishListId");
-
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
@@ -481,12 +479,16 @@ namespace Education.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("WishList");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("WishLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -627,13 +629,7 @@ namespace Education.Infrastructure.Migrations
                         .WithMany("Students")
                         .HasForeignKey("GroupModelId");
 
-                    b.HasOne("Education.Domain.Entities.WishList", "WishList")
-                        .WithMany()
-                        .HasForeignKey("WishListId");
-
                     b.Navigation("GroupModel");
-
-                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.CourseFeedbackModel", b =>
@@ -671,15 +667,13 @@ namespace Education.Infrastructure.Migrations
                         .WithMany("Courses")
                         .HasForeignKey("UserModelId");
 
-                    b.HasOne("Education.Domain.Entities.WishList", "WishList")
+                    b.HasOne("Education.Domain.Entities.WishList", null)
                         .WithMany("Courses")
                         .HasForeignKey("WishListId");
 
                     b.Navigation("Category");
 
                     b.Navigation("Coupon");
-
-                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.GroupModel", b =>
@@ -781,6 +775,17 @@ namespace Education.Infrastructure.Migrations
                     b.Navigation("VideoModell");
                 });
 
+            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
+                {
+                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
+                        .WithOne("WishList")
+                        .HasForeignKey("Education.Domain.Entities.WishList", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -835,6 +840,9 @@ namespace Education.Infrastructure.Migrations
             modelBuilder.Entity("Education.Domain.Entities.Auth.UserModel", b =>
                 {
                     b.Navigation("Courses");
+
+                    b.Navigation("WishList")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.CourseModel", b =>
