@@ -27,6 +27,11 @@ namespace Education.API.Controllers
         {
             return await _mediatr.Send(new GetGroupsByIdQuery { CourseId =  courseId });
         }
+        [HttpPost]
+        public async Task<ResponseModel> CreateGroup(CreateGroupCommand command)
+        {
+            return await _mediatr.Send(command);
+        }
         [HttpDelete]
         public async Task<ResponseModel> DeleteGroup(Guid id)
         {
