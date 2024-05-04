@@ -3,10 +3,8 @@ using Education.Application.UseCases.GroupCases.Queries;
 using Education.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Education.Application.UseCases.GroupCases.Handlers.QueryHandler
@@ -18,14 +16,28 @@ namespace Education.Application.UseCases.GroupCases.Handlers.QueryHandler
         {
             _context = context;
         }
+
         public async Task<GroupModel> Handle(GetGroupsByIdQuery request, CancellationToken cancellationToken)
         {
-            var res = await _context.Groups.FirstOrDefaultAsync(x => x.Id == request.Id);
-            if(res == null)
+            // Retrieve group based on CourseId
+            var group = await _context.Groups
+                .FirstOrDefaultAsync(x => x.CourseId == request.CourseId, cancellationToken);
+
+            if (group == null)
             {
-                return null;
+                return null; // Return null if group is not found
             }
-            return res;
+
+            // Map Group entity to GroupModel object
+            var groupModel = new GroupModel
+            {
+                Id = group.Id,
+                GroupName = group.GroupName,
+                CourseId = group.CourseId,
+                // You may need to map other properties here
+            };
+
+            return groupModel;
         }
     }
 }
