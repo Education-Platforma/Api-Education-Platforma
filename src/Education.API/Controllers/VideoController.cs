@@ -28,7 +28,7 @@ namespace Education.API.Controllers
             return await _mediatr.Send(new GetVideoByLessonIdQuery() { LessonId = lessonId });
         }
        
-        [HttpPost]
+       /* [HttpPost]
         public async Task<ResponseModel> CreateVideo([FromForm] CreateVideoCommand command)
         {
             var res = await _mediatr.Send(command);
@@ -38,7 +38,7 @@ namespace Education.API.Controllers
                 StatusCode = 201,
                 IsSuccess = true
             };
-        }
+        }*/
         [HttpDelete]
         public async Task<ResponseModel> DeleteVideo(Guid lessonId)
         {
