@@ -10,6 +10,6 @@ namespace Education.Application.UseCases.GroupCases.Queries
 {
     public class GetGroupsByIdQuery : IRequest<GroupModel>
     {
-        public Guid Id { get; set; }
+        public Guid CourseId { get; set; }
     }
 }
