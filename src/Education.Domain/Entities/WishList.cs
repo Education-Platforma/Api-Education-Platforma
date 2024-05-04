@@ -10,7 +10,8 @@ namespace Education.Domain.Entities
     public class WishList
     {
         public Guid Id { get; set; }
-        public Guid CourseId { get; set; }
+        public string UserId { get; set; }
+        public virtual UserModel User { get; set; }
         public virtual List<CourseModel> Courses { get; set; }
     }
 }

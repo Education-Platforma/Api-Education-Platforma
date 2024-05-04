@@ -25,6 +25,7 @@ namespace Education.Application.Abstractions
         public DbSet<VideoFeedbackModel> VideoFeedbacks { get; set; }
 
         public DbSet<GroupModel> Groups { get; set; }
+        public DbSet<WishList> WishLists { get; set; }
 
         public DbSet<UserActivityModel> UserActivityModels { get; set; }
 
