@@ -19,7 +19,12 @@ builder.Services.AddIdentity<UserModel, IdentityRole>()
                .AddEntityFrameworkStores<EducationDbContext>()
                .AddDefaultTokenProviders();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    }); // Configure NewtonsoftJson options
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -32,9 +37,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("_myAllowSpecificOrigins");
-
-// Add CORS middleware before authentication and authorization
 app.UseCors("_myAllowSpecificOrigins");
 
 app.UseAuthentication();
