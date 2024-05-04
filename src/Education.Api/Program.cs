@@ -70,14 +70,16 @@ using (var scope = app.Services.CreateScope())
     {
         var user = new UserModel()
         {
-            Id = Guid.NewGuid(),
+            Id = Guid.NewGuid().ToString(),
             UserName = "Insoniyat",
             FullName = "Brat",
             Country = "Uzbekistan",
             Exp = 50000,
             Rank = 1,
             Email = email,
+            Role = "Admin",
             EmailConfirmed = true
+            
         };
 
         var res = await userManager.CreateAsync(user, password);
