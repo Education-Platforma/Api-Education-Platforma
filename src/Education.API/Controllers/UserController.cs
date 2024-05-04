@@ -1,5 +1,6 @@
 ﻿using Education.Application.UseCases.UserCases.Commands;
 using Education.Application.UseCases.UserCases.Queries;
+using Education.Domain.Entities;
 using Education.Domain.Entities.Auth;
 using Education.Domain.Entities.DemoModels;
 using MediatR;
@@ -26,7 +27,12 @@ namespace Education.API.Controllers
             return res;
         }
         [HttpGet]
+        public async Task<List<CourseModel>> GetUserCourses(string useId)
+        {
+            return await _mediatr.Send(new GetUserCoursesCommand() { UserId = useId});
+        }
         [Authorize(Roles = "Admin")]
+        [HttpGet]
         public async Task<UserModel> GetUserById(Guid id)
         {
             var res = await _mediatr.Send(new GetUserByIdQuery() { Id = id });
