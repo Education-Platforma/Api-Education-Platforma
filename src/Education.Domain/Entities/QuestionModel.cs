@@ -9,6 +9,7 @@ namespace Education.Domain.Entities
     public class QuestionModel
     {
         public Guid Id { get; set; } = Guid.NewGuid();
+        public string Question { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }
         public string OptionC { get; set; }
