@@ -25,7 +25,18 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
 
         public async Task<ResponseModel> Handle(UpdateUserCommand request, CancellationToken cancellationToken)
         {
-            var user = _context.Users.FirstOrDefault(x => x.Id == request.Id);
+            // Parse the request Id to Guid
+            if (!Guid.TryParse(request.Id.ToString(), out var userId))
+            {
+                return new ResponseModel
+                {
+                    Message = "Invalid user Id format",
+                    StatusCode = 400, // Bad Request
+                    IsSuccess = false
+                };
+            }
+
+            var user = _context.Users.FirstOrDefault(x => x.Id == userId.ToString());
             if (user == null)
             {
                 return new ResponseModel
@@ -36,8 +47,15 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
                 };
             }
 
+            // Update user properties
             user.FullName = request.FullName;
-            user.Country = request.Counry;
+            user.Country = request.Counry; 
+            user.Role = request.Role;
+
+            if (request.Role != null)
+            {
+                user.Role = request.Role;
+            }
 
             if (request.Photo != null)
             {
@@ -59,7 +77,6 @@ namespace Education.Application.UseCases.UserCases.Handlers.CommandHandler
 
                 user.PhotoPath = "/UserPhotos/" + fileName;
             }
-
             await _context.SaveChangesAsync(cancellationToken);
 
             return new ResponseModel

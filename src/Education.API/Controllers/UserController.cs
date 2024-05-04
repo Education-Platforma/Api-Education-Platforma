@@ -5,6 +5,7 @@ using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Education.API.Controllers
 {
@@ -44,10 +45,9 @@ namespace Education.API.Controllers
             return res;
         }
         [HttpGet]
-        public async Task<ResponseModel> BuyCourse()
+        public async Task<ResponseModel> BuyCourse(string UserId,Guid CourseId)
         {
-            throw new NotImplementedException();
+            return await _mediatr.Send(new BuyCourseCommand() { UserId = UserId,CourseId = CourseId });
         }
-
     }
 }
