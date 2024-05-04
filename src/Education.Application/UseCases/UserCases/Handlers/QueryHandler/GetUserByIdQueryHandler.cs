@@ -21,7 +21,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.QueryHandler
         }
         public async Task<UserModel> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var res = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.Id );
+            var res = await _context.Users.FirstOrDefaultAsync(x => x.Id == request.Id.ToString() );
             if(res == null)
             {
                 throw new Exception("User not found");

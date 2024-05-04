@@ -99,6 +99,9 @@ namespace Education.Infrastructure.Migrations
                     b.Property<int>("Rank")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Role")
+                        .HasColumnType("text");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
@@ -434,9 +437,6 @@ namespace Education.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("VideoModelId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("VideoModellId")
                         .HasColumnType("uuid");
 
@@ -444,7 +444,7 @@ namespace Education.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("VideoModelId");
+                    b.HasIndex("VideoModellId");
 
                     b.ToTable("VideoFeedbacks");
                 });
@@ -770,11 +770,15 @@ namespace Education.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Education.Domain.Entities.VideoModel", null)
+                    b.HasOne("Education.Domain.Entities.VideoModel", "VideoModell")
                         .WithMany("Feedbacks")
-                        .HasForeignKey("VideoModelId");
+                        .HasForeignKey("VideoModellId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("User");
+
+                    b.Navigation("VideoModell");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

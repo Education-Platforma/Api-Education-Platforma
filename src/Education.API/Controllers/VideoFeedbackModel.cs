@@ -21,6 +21,11 @@ namespace Education.API.Controllers
         {
             return await _mediatr.Send(new GetAllVideoFeedbacksQuery { VideoId = VideoId });
         }
+        [HttpPost]
+        public async Task<ResponseModel> CreateFeedBack (CreateVideoFeedbackCommand command)
+        {
+            return await _mediatr.Send(command);
+        }
         [HttpPut]
         public async Task<ResponseModel> UpdateVideoFeedback(UpdateVideoFeedbackCommand command)
         {
