@@ -1,6 +1,4 @@
 ﻿using Education.Domain.Entities.Enums;
-using System;
-using System.Collections.Generic;
 
 namespace Education.Domain.Entities
 {
@@ -21,5 +19,7 @@ namespace Education.Domain.Entities
         public virtual CategoryModel Category { get; set; }
         public virtual ICollection<LessonModel> Lessons { get; set; }
         public virtual ICollection<CourseFeedbackModel> CourseFeedbacks { get; set; }
+
+        public virtual GroupModel Group { get; set; }
     }
 }
