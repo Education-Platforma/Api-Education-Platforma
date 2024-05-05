@@ -14,7 +14,10 @@ namespace Education.Infrastructure.Persistance
 {
     public class EducationDbContext : IdentityDbContext<UserModel>, IEducationDbContext
     {
-        public EducationDbContext(DbContextOptions<EducationDbContext> options) : base(options) { }
+        public EducationDbContext(DbContextOptions<EducationDbContext> options) : base(options) 
+        {
+            Database.Migrate();
+        }
 
         public DbSet<CategoryModel> Categories { get; set; }
         public DbSet<CouponModel> Coupons { get; set; }

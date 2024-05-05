@@ -11,7 +11,6 @@ namespace Education.Application.UseCases.QuestionCase.Commands
     public class UpdateQuestionCommand : IRequest<ResponseModel>
     {
         public Guid Id { get; set; }
-        public string Question { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }
         public string OptionC { get; set; }

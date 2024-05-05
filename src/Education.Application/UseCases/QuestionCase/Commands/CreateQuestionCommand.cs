@@ -10,7 +10,6 @@ namespace Education.Application.UseCases.QuestionCase.Commands
 {
     public class CreateQuestionCommand : IRequest<ResponseModel>
     {
-        public string Question { get; set; }
         public string OptionA { get; set; }
         public string OptionB { get; set; }
         public string OptionC { get; set; }

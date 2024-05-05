@@ -27,7 +27,6 @@ namespace Education.Application.UseCases.GroupCases.Handlers.CommandHandler
                 CourseId = request.CourseId
             };
             await _context.Groups.AddAsync(group);
-            await _context.SaveChangesAsync();
             return new ResponseModel()
             {
                 Message = "Seccesfully created",
