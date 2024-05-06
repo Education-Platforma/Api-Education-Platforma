@@ -31,8 +31,8 @@ namespace Education.API.Controllers
         {
             return await _mediatr.Send(new GetUserCoursesCommand() { UserId = useId});
         }
-        [Authorize(Roles = "Admin")]
         [HttpGet]
+       // [Authorize(Roles = "Admin")]
         public async Task<UserModel> GetUserById(Guid id)
         {
             var res = await _mediatr.Send(new GetUserByIdQuery() { Id = id });
