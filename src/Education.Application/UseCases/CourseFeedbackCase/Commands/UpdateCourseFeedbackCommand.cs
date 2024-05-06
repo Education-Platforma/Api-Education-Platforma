@@ -12,7 +12,6 @@ namespace Education.Application.UseCases.CourseFeedbackCase.Commands
     {
         public Guid Id { get; set; }
         public string Message { get; set; }
-        public Guid UserId { get; set; }
-        public Guid CourseId { get; set; }
+        
     }
 }

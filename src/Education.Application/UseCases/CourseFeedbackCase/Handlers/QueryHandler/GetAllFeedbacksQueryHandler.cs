@@ -21,13 +21,9 @@ namespace Education.Application.UseCases.CourseFeedbackCase.Handlers.QueryHandle
 
         public async Task<List<CourseFeedbackModel>> Handle(GetAllFeedbacksQuery request, CancellationToken cancellationToken)
         {
-            var result = await _context.CourseFeedbacks.ToListAsync();
-
-            if(result == null)
-            {
-                return null!;
-            }
-            
+            var result = await _context.CourseFeedbacks
+               .Where(feedback => feedback.CourseId == request.CourseId)
+               .ToListAsync(cancellationToken);
 
             return result;
 

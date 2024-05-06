@@ -22,18 +22,18 @@ namespace Education.Application.UseCases.CourseFeedbackCase.Handlers.CommandHand
 
         public async Task<ResponseModel> Handle(UpdateCourseFeedbackCommand request, CancellationToken cancellationToken)
         {
-            var courseFeedback = await _context.CourseFeedbacks.FirstOrDefaultAsync(x  => x.Id == request.Id);
+            var courseFeedback = await _context.CourseFeedbacks.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (courseFeedback == null)
             {
-                return new ResponseModel { Message = "CourseFeedback not found", StatusCode = 404, IsSuccess = true };
+                return new ResponseModel { Message = "CourseFeedback not found", StatusCode = 404, IsSuccess = false };
             }
 
             courseFeedback.Message = request.Message;
 
             _context.CourseFeedbacks.Update(courseFeedback);
 
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(cancellationToken);
 
             return new ResponseModel { Message = "CourseFeedback updated successfully", StatusCode = 200, IsSuccess = true };
 
