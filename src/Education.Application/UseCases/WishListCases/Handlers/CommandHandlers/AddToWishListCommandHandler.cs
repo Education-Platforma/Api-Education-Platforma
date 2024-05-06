@@ -1,6 +1,7 @@
 ﻿using Education.Application.Abstractions;
 using Education.Application.UseCases.WishListCases.Commands;
 using Education.Domain.Entities;
+using Education.Domain.Entities.Auth; // Import UserModel
 using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +23,9 @@ namespace Education.Application.UseCases.WishListCases.Handlers.CommandHandlers
 
         public async Task<ResponseModel> Handle(AddToWishListCommand request, CancellationToken cancellationToken)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == request.UserId);
+            var user = await _context.Users
+                .Include(u => u.WishList) 
+                .FirstOrDefaultAsync(u => u.Id == request.UserId);
 
             if (user == null)
             {
@@ -46,7 +49,8 @@ namespace Education.Application.UseCases.WishListCases.Handlers.CommandHandlers
                 };
             }
 
-            if (user.WishList.Courses.Any(c => c.Id == request.CourseId))
+
+            if (user.WishList.Any(c => c.Id == request.CourseId))
             {
                 return new ResponseModel
                 {
@@ -56,7 +60,7 @@ namespace Education.Application.UseCases.WishListCases.Handlers.CommandHandlers
                 };
             }
 
-            user.WishList.Courses.Add(course);
+            user.WishList.Add(course);
 
             try
             {

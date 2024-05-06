@@ -1,5 +1,6 @@
 ﻿using Education.Application.UseCases.UserCases.Commands;
 using Education.Application.UseCases.UserCases.Queries;
+using Education.Application.UseCases.WishListCases.Queries;
 using Education.Domain.Entities;
 using Education.Domain.Entities.Auth;
 using Education.Domain.Entities.DemoModels;
@@ -54,6 +55,11 @@ namespace Education.API.Controllers
         public async Task<ResponseModel> BuyCourse(string UserId,Guid CourseId)
         {
             return await _mediatr.Send(new BuyCourseCommand() { UserId = UserId,CourseId = CourseId });
+        }
+        [HttpGet]
+        public async Task<List<CourseModel>> GetCoursesFromWishList(string userId)
+        {
+            return await _mediatr.Send(new GetAllCourseFromWishListQuery() { UserId = userId});
         }
     }
 }

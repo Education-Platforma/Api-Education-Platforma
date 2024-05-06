@@ -21,15 +21,7 @@ namespace Education.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToWishList(string userId, Guid courseId)
         {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return BadRequest("User ID cannot be null or empty.");
-            }
-
-            if (courseId == Guid.Empty)
-            {
-                return BadRequest("Course ID cannot be empty.");
-            }
+            
 
             var response = await _mediator.Send(new AddToWishListCommand { UserId = userId, CourseId = courseId });
 
@@ -39,15 +31,6 @@ namespace Education.API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteFromWishList(string userId, Guid courseId)
         {
-            if (string.IsNullOrEmpty(userId))
-            {
-                return BadRequest("User ID cannot be null or empty.");
-            }
-
-            if (courseId == Guid.Empty)
-            {
-                return BadRequest("Course ID cannot be empty.");
-            }
 
             var response = await _mediator.Send(new DeleteFromWishList() { UserId = userId, CourseId = courseId });
 

@@ -112,9 +112,6 @@ namespace Education.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<Guid?>("WishListId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GroupModelId");
@@ -228,11 +225,11 @@ namespace Education.Infrastructure.Migrations
                     b.Property<double>("TotalTime")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("UserModelId")
+                    b.Property<string>("UserId")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("WishListId")
-                        .HasColumnType("uuid");
+                    b.Property<string>("UserModelId")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -240,9 +237,9 @@ namespace Education.Infrastructure.Migrations
 
                     b.HasIndex("CouponId");
 
-                    b.HasIndex("UserModelId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("WishListId");
+                    b.HasIndex("UserModelId");
 
                     b.ToTable("Courses");
                 });
@@ -474,24 +471,6 @@ namespace Education.Infrastructure.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("WishLists");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -665,12 +644,12 @@ namespace Education.Infrastructure.Migrations
                         .HasForeignKey("CouponId");
 
                     b.HasOne("Education.Domain.Entities.Auth.UserModel", null)
+                        .WithMany("WishList")
+                        .HasForeignKey("UserId");
+
+                    b.HasOne("Education.Domain.Entities.Auth.UserModel", null)
                         .WithMany("Courses")
                         .HasForeignKey("UserModelId");
-
-                    b.HasOne("Education.Domain.Entities.WishList", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("WishListId");
 
                     b.Navigation("Category");
 
@@ -776,17 +755,6 @@ namespace Education.Infrastructure.Migrations
                     b.Navigation("VideoModell");
                 });
 
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
-                        .WithOne("WishList")
-                        .HasForeignKey("Education.Domain.Entities.WishList", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -842,8 +810,7 @@ namespace Education.Infrastructure.Migrations
                 {
                     b.Navigation("Courses");
 
-                    b.Navigation("WishList")
-                        .IsRequired();
+                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.CourseModel", b =>
@@ -871,11 +838,6 @@ namespace Education.Infrastructure.Migrations
             modelBuilder.Entity("Education.Domain.Entities.VideoModel", b =>
                 {
                     b.Navigation("Feedbacks");
-                });
-
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

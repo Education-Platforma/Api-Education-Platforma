@@ -1,9 +1,10 @@
 ﻿using Education.Application.Abstractions;
 using Education.Application.UseCases.WishListCases.Commands;
+using Education.Domain.Entities.Auth;
 using Education.Domain.Entities.DemoModels;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,19 +23,19 @@ namespace Education.Application.UseCases.WishListCases.Handlers.CommandHandlers
         {
             try
             {
-                var userWishList = await _context.WishLists.FirstOrDefaultAsync(w => w.UserId == request.UserId);
+                var user = await _context.Users.FindAsync(request.UserId);
 
-                if (userWishList == null)
+                if (user == null)
                 {
                     return new ResponseModel
                     {
-                        Message = "User's wishlist not found",
+                        Message = "User not found",
                         StatusCode = 404,
                         IsSuccess = false
                     };
                 }
 
-                var courseToRemove = userWishList.Courses.FirstOrDefault(c => c.Id == request.CourseId);
+                var courseToRemove = user.WishList.FirstOrDefault(c => c.Id == request.CourseId);
 
                 if (courseToRemove == null)
                 {
@@ -46,7 +47,7 @@ namespace Education.Application.UseCases.WishListCases.Handlers.CommandHandlers
                     };
                 }
 
-                userWishList.Courses.Remove(courseToRemove);
+                user.WishList.Remove(courseToRemove);
 
                 await _context.SaveChangesAsync(cancellationToken);
 

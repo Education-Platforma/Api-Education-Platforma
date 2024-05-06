@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Education.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class test : Migration
+    public partial class de : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -78,18 +78,6 @@ namespace Education.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Videos", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "WishList",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CourseId = table.Column<Guid>(type: "uuid", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_WishList", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,7 +163,6 @@ namespace Education.Infrastructure.Migrations
                     JoinedData = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     IsActive = table.Column<bool>(type: "boolean", nullable: false),
                     GroupModelId = table.Column<Guid>(type: "uuid", nullable: true),
-                    WishListId = table.Column<Guid>(type: "uuid", nullable: true),
                     Role = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -195,11 +182,6 @@ namespace Education.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_WishList_WishListId",
-                        column: x => x.WishListId,
-                        principalTable: "WishList",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -237,17 +219,17 @@ namespace Education.Infrastructure.Migrations
                     TeacherName = table.Column<string>(type: "text", nullable: false),
                     CouponId = table.Column<Guid>(type: "uuid", nullable: true),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    WishListId = table.Column<Guid>(type: "uuid", nullable: true),
-                    UserModelId = table.Column<string>(type: "text", nullable: true)
+                    UserId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_AspNetUsers_UserModelId",
-                        column: x => x.UserModelId,
+                        name: "FK_Courses_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Courses_Categories_CategoryId",
                         column: x => x.CategoryId,
@@ -258,11 +240,6 @@ namespace Education.Infrastructure.Migrations
                         name: "FK_Courses_Coupons_CouponId",
                         column: x => x.CouponId,
                         principalTable: "Coupons",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Courses_WishList_WishListId",
-                        column: x => x.WishListId,
-                        principalTable: "WishList",
                         principalColumn: "Id");
                 });
 
@@ -489,11 +466,6 @@ namespace Education.Infrastructure.Migrations
                 column: "GroupModelId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_WishListId",
-                table: "AspNetUsers",
-                column: "WishListId");
-
-            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -520,19 +492,15 @@ namespace Education.Infrastructure.Migrations
                 column: "CouponId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_UserModelId",
+                name: "IX_Courses_UserId",
                 table: "Courses",
-                column: "UserModelId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Courses_WishListId",
-                table: "Courses",
-                column: "WishListId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Groups_CourseId",
                 table: "Groups",
-                column: "CourseId");
+                column: "CourseId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_CourseId",
@@ -615,7 +583,7 @@ namespace Education.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Courses_AspNetUsers_UserModelId",
+                name: "FK_Courses_AspNetUsers_UserId",
                 table: "Courses");
 
             migrationBuilder.DropTable(
@@ -677,9 +645,6 @@ namespace Education.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Coupons");
-
-            migrationBuilder.DropTable(
-                name: "WishList");
         }
     }
 }
