@@ -17,9 +17,8 @@ public class BuyCourseCommandHandler : IRequestHandler<BuyCourseCommand, Respons
     {
         try
         {
-            // Find the user by UserId
             var user = await _context.Users
-                .Include(u => u.Courses) // Include the Courses navigation property
+                .Include(u => u.Courses) 
                 .FirstOrDefaultAsync(u => u.Id == request.UserId.ToString());
 
             if (user == null)
@@ -32,7 +31,6 @@ public class BuyCourseCommandHandler : IRequestHandler<BuyCourseCommand, Respons
                 };
             }
 
-            // Check if the user already has the course
             if (user.Courses.Any(c => c.Id == request.CourseId))
             {
                 return new ResponseModel()
@@ -43,9 +41,8 @@ public class BuyCourseCommandHandler : IRequestHandler<BuyCourseCommand, Respons
                 };
             }
 
-            // Find the course by CourseId
             var course = await _context.Courses
-                .Include(c => c.Group) // Include the Group navigation property
+                .Include(c => c.Group) 
                 .FirstOrDefaultAsync(c => c.Id == request.CourseId);
 
             if (course == null)
@@ -58,13 +55,10 @@ public class BuyCourseCommandHandler : IRequestHandler<BuyCourseCommand, Respons
                 };
             }
 
-            // Add the course to the user's course list
             user.Courses.Add(course);
 
-            // Add the user to the course's group
             course.Group.Students.Add(user);
 
-            // Update the user and the course group
             _context.Users.Update(user);
             _context.Groups.Update(course.Group);
             await _context.SaveChangesAsync();

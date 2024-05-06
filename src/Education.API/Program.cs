@@ -5,6 +5,7 @@ using Education.Infrastructure.Persistance;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddSignalR();
 
 builder.Services.AddCors(options =>
 {
@@ -29,6 +30,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
 {
@@ -79,7 +82,7 @@ using (var scope = app.Services.CreateScope())
             Email = email,
             Role = "Admin",
             EmailConfirmed = true
-            
+
         };
 
         var res = await userManager.CreateAsync(user, password);
@@ -88,5 +91,11 @@ using (var scope = app.Services.CreateScope())
 
     }
 }
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapHub<Hubs>("/yourHubPath");
+    endpoints.MapControllers();
+});
 
 app.Run();
