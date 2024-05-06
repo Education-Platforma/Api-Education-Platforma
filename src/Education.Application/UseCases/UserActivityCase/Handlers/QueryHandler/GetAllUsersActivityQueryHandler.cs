@@ -3,10 +3,9 @@ using Education.Application.UseCases.UserActivityCase.Queries;
 using Education.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Education.Application.UseCases.UserActivityCase.Handlers.QueryHandler
@@ -22,11 +21,9 @@ namespace Education.Application.UseCases.UserActivityCase.Handlers.QueryHandler
 
         public async Task<List<UserActivityModel>> Handle(GetAllUsersActivityQuery request, CancellationToken cancellationToken)
         {
-            var result = await _context.UserActivityModels.ToListAsync();
-            if(result == null || result.Count == 0)
-            {
-                return null!;
-            }
+            var result = await _context.UserActivityModels
+                .Where(u => u.UserId == request.UserId)  
+                .ToListAsync();
 
             return result;
         }

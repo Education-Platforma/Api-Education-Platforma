@@ -11,7 +11,6 @@ namespace Education.Application.UseCases.MessageCases.Command
     public class CreateMessageCommand:IRequest<ResponseModel>
     {
         public string Message { get; set; }
-        public DateTimeOffset Date { get; set; }
         public Guid GoupId { get; set; }
         public Guid SenderId { get; set; }
     }

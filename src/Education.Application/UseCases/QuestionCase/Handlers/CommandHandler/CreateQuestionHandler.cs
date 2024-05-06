@@ -4,9 +4,7 @@ using Education.Domain.Entities;
 using Education.Domain.Entities.DemoModels;
 using MediatR;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Education.Application.UseCases.QuestionCase.Handlers.CommandHandler
@@ -24,6 +22,7 @@ namespace Education.Application.UseCases.QuestionCase.Handlers.CommandHandler
         {
             var question = new QuestionModel()
             {
+                Question = request.Question,
                 QuizModelId = request.QuizModelId,
                 Exp = request.Exp,
                 Id = Guid.NewGuid(),

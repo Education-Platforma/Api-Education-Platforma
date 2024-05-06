@@ -25,7 +25,6 @@ namespace Education.Application.UseCases.MessageCases.Handlers.CommandHandlers
             var message = new MessageModel()
             {
                 Message = request.Message,
-                Date = request.Date,
                 GroupId = request.GoupId,
                 SenderId = request.SenderId.ToString()
             };

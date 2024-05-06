@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Education.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -18,14 +18,14 @@ namespace Education.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("all")] // Route path: api/Category/all
+        [HttpGet] 
         public async Task<IActionResult> GetCategories()
         {
             var result = await _mediator.Send(new GetAllCategoryQuery());
             return Ok(result);
         }
 
-        [HttpGet("{id}")] // Route path: api/Category/{id}
+        [HttpGet("{id}")] 
         public async Task<IActionResult> GetCategory(Guid id)
         {
             var result = await _mediator.Send(new GetCategoryByIdQuery() { Id = id});

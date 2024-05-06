@@ -39,6 +39,11 @@ namespace Education.API.Controllers
             var res = await _mediatr.Send(new GetUserByIdQuery() { Id = id });
             return res;
         }
+        [HttpPost]
+        public async Task<ResponseModel> AddExp(AddExpCommand command)
+        {
+            return await _mediatr.Send(command);
+        }
         [HttpPut ]
         public async Task<ResponseModel> UpdateUser([FromForm] UpdateUserCommand command)
         {
