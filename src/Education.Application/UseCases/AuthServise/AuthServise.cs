@@ -36,7 +36,8 @@ namespace Education.Application.UseCases.AuthServise
                 new Claim("UserName",user.UserName!),
                 new Claim(ClaimTypes.Name,user.FullName!),
                 new Claim(ClaimTypes.Email,user.Email!),
-                new Claim(ClaimTypes.Role, role[0]),
+                new Claim("id",user.Id!),
+                new Claim("Role",user.Role),
             };
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _config["JWTSettings:ValidIssuer"],
