@@ -92,10 +92,6 @@ using (var scope = app.Services.CreateScope())
     }
 }
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<Hubs>("/yourHubPath");
-    endpoints.MapControllers();
-});
+app.MapHub<Hubs>("/yourHubPath");
 
 app.Run();

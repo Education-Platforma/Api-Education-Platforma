@@ -1,4 +1,5 @@
-﻿using Education.Domain.Entities.Enums;
+﻿using Education.Domain.Entities.Auth;
+using Education.Domain.Entities.Enums;
 
 namespace Education.Domain.Entities
 {

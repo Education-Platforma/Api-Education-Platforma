@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,12 +20,12 @@ namespace Education.Domain.Entities.Auth
         public string Country { get; set; }
         public DateTimeOffset JoinedData { get; set; } = DateTimeOffset.UtcNow;
         public bool IsActive { get; set; } = true;
-        public Guid? GroupModelId { get; set; }
-        public Guid? WishListId { get; set; }
+        [NotMapped]
+        public virtual List<CourseModel> WishList { get; set; } = new List<CourseModel>();
+        public Guid? GroupModelId { get; set; } 
         public string? Role { get; set; } = "User";
         public virtual List<CourseModel> Courses { get; set; }
         public virtual GroupModel GroupModel { get; set; }
-        public virtual WishList WishList { get; set; }
 
     }
 }

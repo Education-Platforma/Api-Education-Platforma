@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Education.Infrastructure.Migrations
 {
     [DbContext(typeof(EducationDbContext))]
-    [Migration("20240505102758_dsererervre")]
-    partial class dsererervre
+    [Migration("20240506131401_ferferf")]
+    partial class ferferf
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -114,9 +114,6 @@ namespace Education.Infrastructure.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
-
-                    b.Property<Guid?>("WishListId")
-                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -234,9 +231,6 @@ namespace Education.Infrastructure.Migrations
                     b.Property<string>("UserModelId")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("WishListId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -244,8 +238,6 @@ namespace Education.Infrastructure.Migrations
                     b.HasIndex("CouponId");
 
                     b.HasIndex("UserModelId");
-
-                    b.HasIndex("WishListId");
 
                     b.ToTable("Courses");
                 });
@@ -477,24 +469,6 @@ namespace Education.Infrastructure.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
-                    b.ToTable("WishLists");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -671,10 +645,6 @@ namespace Education.Infrastructure.Migrations
                         .WithMany("Courses")
                         .HasForeignKey("UserModelId");
 
-                    b.HasOne("Education.Domain.Entities.WishList", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("WishListId");
-
                     b.Navigation("Category");
 
                     b.Navigation("Coupon");
@@ -779,17 +749,6 @@ namespace Education.Infrastructure.Migrations
                     b.Navigation("VideoModell");
                 });
 
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
-                        .WithOne("WishList")
-                        .HasForeignKey("Education.Domain.Entities.WishList", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -844,9 +803,6 @@ namespace Education.Infrastructure.Migrations
             modelBuilder.Entity("Education.Domain.Entities.Auth.UserModel", b =>
                 {
                     b.Navigation("Courses");
-
-                    b.Navigation("WishList")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.CourseModel", b =>
@@ -874,11 +830,6 @@ namespace Education.Infrastructure.Migrations
             modelBuilder.Entity("Education.Domain.Entities.VideoModel", b =>
                 {
                     b.Navigation("Feedbacks");
-                });
-
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }

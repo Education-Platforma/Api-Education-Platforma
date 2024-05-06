@@ -32,15 +32,14 @@ namespace Education.Infrastructure.Persistance
         public DbSet<VideoFeedbackModel> VideoFeedbacks { get; set; }
         public DbSet<GroupModel> Groups { get; set; }
         public DbSet<UserActivityModel> UserActivityModels { get; set; }
-        public DbSet<WishList> WishLists { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UserModel>()
-                .HasOne(u => u.WishList)   
-                .WithOne(w => w.User)      
-                .HasForeignKey<WishList>(w => w.UserId); 
+                .HasMany(u => u.WishList)
+                .WithOne()
+                .HasForeignKey("UserId"); 
         }
 
     }

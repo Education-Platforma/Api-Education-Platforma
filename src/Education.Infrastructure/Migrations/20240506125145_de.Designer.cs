@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Education.Infrastructure.Migrations
 {
     [DbContext(typeof(EducationDbContext))]
-    [Migration("20240504141132_test")]
-    partial class test
+    [Migration("20240506125145_de")]
+    partial class de
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,9 +115,6 @@ namespace Education.Infrastructure.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
 
-                    b.Property<Guid?>("WishListId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("GroupModelId");
@@ -128,8 +125,6 @@ namespace Education.Infrastructure.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
-
-                    b.HasIndex("WishListId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -233,11 +228,9 @@ namespace Education.Infrastructure.Migrations
                     b.Property<double>("TotalTime")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("UserModelId")
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<Guid?>("WishListId")
-                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -245,9 +238,7 @@ namespace Education.Infrastructure.Migrations
 
                     b.HasIndex("CouponId");
 
-                    b.HasIndex("UserModelId");
-
-                    b.HasIndex("WishListId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -267,7 +258,8 @@ namespace Education.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseId")
+                        .IsUnique();
 
                     b.ToTable("Groups");
                 });
@@ -478,20 +470,6 @@ namespace Education.Infrastructure.Migrations
                     b.ToTable("Videos");
                 });
 
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WishList");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -630,13 +608,7 @@ namespace Education.Infrastructure.Migrations
                         .WithMany("Students")
                         .HasForeignKey("GroupModelId");
 
-                    b.HasOne("Education.Domain.Entities.WishList", "WishList")
-                        .WithMany()
-                        .HasForeignKey("WishListId");
-
                     b.Navigation("GroupModel");
-
-                    b.Navigation("WishList");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.CourseFeedbackModel", b =>
@@ -670,26 +642,24 @@ namespace Education.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("CouponId");
 
-                    b.HasOne("Education.Domain.Entities.Auth.UserModel", null)
+                    b.HasOne("Education.Domain.Entities.Auth.UserModel", "User")
                         .WithMany("Courses")
-                        .HasForeignKey("UserModelId");
-
-                    b.HasOne("Education.Domain.Entities.WishList", "WishList")
-                        .WithMany("Courses")
-                        .HasForeignKey("WishListId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("Coupon");
 
-                    b.Navigation("WishList");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Education.Domain.Entities.GroupModel", b =>
                 {
                     b.HasOne("Education.Domain.Entities.CourseModel", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
+                        .WithOne("Group")
+                        .HasForeignKey("Education.Domain.Entities.GroupModel", "CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -844,6 +814,9 @@ namespace Education.Infrastructure.Migrations
                 {
                     b.Navigation("CourseFeedbacks");
 
+                    b.Navigation("Group")
+                        .IsRequired();
+
                     b.Navigation("Lessons");
                 });
 
@@ -862,11 +835,6 @@ namespace Education.Infrastructure.Migrations
             modelBuilder.Entity("Education.Domain.Entities.VideoModel", b =>
                 {
                     b.Navigation("Feedbacks");
-                });
-
-            modelBuilder.Entity("Education.Domain.Entities.WishList", b =>
-                {
-                    b.Navigation("Courses");
                 });
 #pragma warning restore 612, 618
         }
