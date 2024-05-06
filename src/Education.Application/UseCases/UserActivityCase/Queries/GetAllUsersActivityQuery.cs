@@ -10,6 +10,6 @@ namespace Education.Application.UseCases.UserActivityCase.Queries
 {
     public class GetAllUsersActivityQuery : IRequest<List<UserActivityModel>>
     {
-
+        public string UserId { get; set; }
     }
 }

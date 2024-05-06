@@ -1,5 +1,6 @@
 ﻿using Education.Application.UseCases.MessageCases.Command;
 using Education.Application.UseCases.MessageCases.Queries;
+using Education.Domain.Entities;
 using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -7,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Education.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class MessageController : ControllerBase
     {
@@ -18,7 +19,7 @@ namespace Education.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("all")]
+        [HttpGet]
         public async Task<IActionResult> GetAllMessages()
         {
             var query = new GetAllMessagesQuery(); 
@@ -26,12 +27,11 @@ namespace Education.API.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{id}")] 
-        public async Task<IActionResult> GetMessageById(Guid id)
+        [HttpGet] 
+        public async Task<MessageModel> GetMessageById(Guid id)
         {
-            var query = new GetMessageByIdQuery { Id = id }; 
-            var result = await _mediator.Send(query); 
-            return Ok(result);
+            return await _mediator.Send(new GetMessageByIdQuery { Id = id }); 
+            
         }
         [HttpPost]
         public async Task<ResponseModel> CreateMessage(CreateMessageCommand command)

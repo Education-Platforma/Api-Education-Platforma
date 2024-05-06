@@ -1,12 +1,14 @@
 ﻿using Education.Application.UseCases.QuestionCase.Commands;
 using Education.Application.UseCases.QuestionCase.Queries;
+using Education.Domain.Entities;
+using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Education.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class QuestionController : ControllerBase
     {
@@ -18,41 +20,36 @@ namespace Education.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateQuestion(CreateQuestionCommand command)
+        public async Task<ResponseModel> CreateQuestion(CreateQuestionCommand command)
         {
-            var result = _mediatr.Send(command);
-            return Ok(result);
+            return await _mediatr.Send(command);
         }
 
         [HttpPut]
-        public IActionResult UpdateQuestion(UpdateQuestionCommand command)
+        public async Task<ResponseModel> UpdateQuestion(UpdateQuestionCommand command)
         {
-            var result = _mediatr.Send(command);
-            return Ok(result);
+            return await _mediatr.Send(command);
         }
 
         [HttpDelete]
-        public IActionResult DeleteQuestion(DeleteQuestionCommand command)
+        public async Task<ResponseModel> DeleteQuestion(DeleteQuestionCommand command)
         {
-            var result = _mediatr.Send(command);
-            return Ok(result);
+            return await _mediatr.Send(command);
+          
         }
 
         [HttpGet]
-        public IActionResult GetAllQuestions()
+        public async Task<List<QuestionModel>> GetAllQuestions()
         {
-            var query = new GetAllQuestionsQuery();
-            var result = _mediatr.Send(query);
-            return Ok(result);
+            return await _mediatr.Send(new GetAllQuestionsQuery());
+            
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetQuestionById(Guid id)
+        public async Task<QuestionModel> GetQuestionById(Guid id)
         {
-            var query = new GetQuestionByIdQuery { Id = id };
-            var result = _mediatr.Send(query);
-            return Ok(result);
+            return await _mediatr.Send(new GetQuestionByIdQuery() { Id = id });
+            
         }
-
     }
 }

@@ -1,12 +1,14 @@
 ﻿using Education.Application.UseCases.UserActivityCase.Commands;
 using Education.Application.UseCases.UserActivityCase.Queries;
+using Education.Domain.Entities;
+using Education.Domain.Entities.DemoModels;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Education.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserActivityController : ControllerBase
     {
@@ -17,41 +19,36 @@ namespace Education.API.Controllers
             _mediatr = mediatr;
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserActivity(Guid id)
+        [HttpGet]
+        public async Task<UserActivityModel> GetUserActivity(Guid id)
         {
-            var query = new GetUserActivityQuery { Id = id };
-            var result = await _mediatr.Send(query);
-            return Ok(result);
+            return await _mediatr.Send(new GetUserActivityQuery { Id = id });
+            
         }
 
-        [HttpGet("all")]
-        public async Task<IActionResult> GetAllUsersActivity()
+        [HttpGet]
+        public async Task<List<UserActivityModel>>GetAllUsersActivity(string id)
         {
-            var query = new GetAllUsersActivityQuery();
-            var result = await _mediatr.Send(query);
-            return Ok(result);
+           return await _mediatr.Send(new GetAllUsersActivityQuery() { UserId = id });
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddUserActivity(CreateUserActivityCommand command)
+        public async Task<ResponseModel> AddUserActivity(CreateUserActivityCommand command)
         {
-            var result = await _mediatr.Send(command); 
-            return Ok(result);
+            return await _mediatr.Send(command);
+            
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateUserActivity(UpdateUserActivityCommand command)
+        public async Task<ResponseModel> UpdateUserActivity(UpdateUserActivityCommand command)
         {
-            var result = await _mediatr.Send(command);
-            return Ok(result);
+            return await _mediatr.Send(command);
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteUserActivity(DeleteUserActivityCommand command)
+        public async Task<ResponseModel> DeleteUserActivity(Guid ActivityId)
         {
-            var result = await _mediatr.Send(command);
-            return Ok(result);
+            return await _mediatr.Send(new DeleteUserActivityCommand() { Id = ActivityId});
         }
 
 

@@ -14,7 +14,7 @@ namespace Education.Infrastructure.Persistance
 {
     public class EducationDbContext : IdentityDbContext<UserModel>, IEducationDbContext
     {
-        public EducationDbContext(DbContextOptions<EducationDbContext> options) : base(options) 
+        public EducationDbContext(DbContextOptions<EducationDbContext> options) : base(options)
         {
             Database.Migrate();
         }
@@ -39,8 +39,13 @@ namespace Education.Infrastructure.Persistance
             modelBuilder.Entity<UserModel>()
                 .HasMany(u => u.WishList)
                 .WithOne()
-                .HasForeignKey("UserId"); 
+                .HasForeignKey("UserId");
+            modelBuilder.Entity<QuizModel>()
+              .HasMany(q => q.Questions)
+              .WithOne(q => q.QuizModel)
+              .HasForeignKey(q => q.QuizModelId);
+            base.OnModelCreating(modelBuilder);
         }
-
+       
     }
 }

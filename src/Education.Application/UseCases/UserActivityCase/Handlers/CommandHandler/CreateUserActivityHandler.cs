@@ -27,7 +27,6 @@ namespace Education.Application.UseCases.UserActivityCase.Handlers.CommandHandle
             {
                 Id = Guid.NewGuid(),
                 UserId = request.UserId.ToString(),
-                Date = request.Date,
                 WatchedVideosByMinute = request.WatchedVideosByMinute,
             };
 

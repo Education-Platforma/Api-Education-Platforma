@@ -10,7 +10,6 @@ namespace Education.Application.UseCases.UserActivityCase.Commands
 {
     public class CreateUserActivityCommand : IRequest<ResponseModel>
     {
-        public DateTimeOffset Date { get; set; }
         public double WatchedVideosByMinute { get; set; }
         public Guid UserId { get; set; }
     }
