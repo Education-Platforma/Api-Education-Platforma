@@ -10,6 +10,6 @@ namespace Education.Application.UseCases.CourseFeedbackCase.Queries
 {
     public class GetAllFeedbacksQuery : IRequest<List<CourseFeedbackModel>>
     {
-
+        public Guid CourseId { get; set; }
     }
 }
