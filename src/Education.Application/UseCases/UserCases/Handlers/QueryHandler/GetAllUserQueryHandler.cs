@@ -20,7 +20,7 @@ namespace Education.Application.UseCases.UserCases.Handlers.QueryHandler
         }
         public async Task<List<UserModel>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.OrderByDescending(x =>x.Exp).ToListAsync();
             return users;
         }
     }
