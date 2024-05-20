@@ -19,8 +19,8 @@ namespace Education.API.Controllers
             _userManager = userManager;
             _authService = authService;
         }
-        [HttpPost]
 
+        [HttpPost]
         public async Task<IActionResult> Register(RegisterDTO register)
         {
             if (!ModelState.IsValid)

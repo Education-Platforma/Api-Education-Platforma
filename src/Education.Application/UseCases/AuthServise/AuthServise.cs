@@ -24,9 +24,9 @@ namespace Education.Application.UseCases.AuthServise
         }
         public async Task<string> GenerateToken(UserModel user)
         {
-            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTSettings:Secret"]!));
+            SymmetricSecurityKey securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWTSettings:SecretKey"]!));
             SigningCredentials credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            int expirePeriod = int.Parse(_config["JWTSettings:Expire"]!);
+            int expirePeriod = int.Parse(_config["JWTSettings:ExpireDate"]!);
             var role = await _userManager.GetRolesAsync(user);
             
             List<Claim> claims = new List<Claim>()
@@ -41,7 +41,7 @@ namespace Education.Application.UseCases.AuthServise
             };
             JwtSecurityToken token = new JwtSecurityToken(
                 issuer: _config["JWTSettings:ValidIssuer"],
-                audience: _config["JWTSettings:ValidAudence"],
+                audience: _config["JWTSettings:ValidAudience"],
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(expirePeriod),
                 signingCredentials: credentials);

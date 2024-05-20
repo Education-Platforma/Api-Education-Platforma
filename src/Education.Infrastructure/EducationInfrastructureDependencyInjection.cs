@@ -18,7 +18,7 @@ namespace Education.Infrastructure
             services.AddDbContext<IEducationDbContext,EducationDbContext>(options =>
             {
                 options.UseLazyLoadingProxies()
-                    .UseNpgsql(configuration.GetConnectionString("EducationDbConnectionString"));
+                    .UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
             });
 
             return services;
