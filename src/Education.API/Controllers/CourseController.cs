@@ -23,9 +23,9 @@ namespace Education.API.Controllers
             return res;
         }
         [HttpGet]
-        public async Task<ResponseModel> GetCourseById(UpdateCourseCommand command)
+        public async Task<CourseModel> GetCourseById(Guid id)
         {
-            var res = await _mediatr.Send(command);
+            CourseModel res = await _mediatr.Send(new GetCourseByIdQuery { Id=id});
             return res;
         }
         [HttpGet]

@@ -10,6 +10,6 @@ namespace Education.Application.UseCases.CourseCases.Queries
 {
     public class GetCourseByIdQuery:IRequest<CourseModel>
     {
-        public Guid id { get; set; }
+        public Guid Id { get; set; }
     }
 }

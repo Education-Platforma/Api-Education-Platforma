@@ -20,7 +20,7 @@ namespace Education.Application.UseCases.CourseCases.Handlers.QueryHandlers
         }
         public async Task<CourseModel> Handle(GetCourseByIdQuery request, CancellationToken cancellationToken)
         {
-            var res = await _context.Courses.FirstOrDefaultAsync(x => x.Id == request.id);
+            var res = await _context.Courses.FirstOrDefaultAsync(x => x.Id == request.Id);
             if(res == null)
             {
                 return null;
