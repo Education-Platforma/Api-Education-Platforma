@@ -1,4 +1,5 @@
 using Education.Application;
+using Education.Application.UseCases.EmailService;
 using Education.Domain.Entities.Auth;
 using Education.Infrastructure;
 using Education.Infrastructure.Persistance;
@@ -15,6 +16,8 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddEducationApplication();
 builder.Services.AddEducationINfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<ISendEmailService,SendEmailService>();
 
 builder.Services.AddIdentity<UserModel, IdentityRole>()
                .AddEntityFrameworkStores<EducationDbContext>()

@@ -1,4 +1,5 @@
 ﻿using Education.Application.UseCases.AuthServise;
+using Education.Application.UseCases.EmailService;
 using Education.Domain.DTOS;
 using Education.Domain.Entities.Auth;
 using Education.Domain.Entities.DemoModels;
@@ -13,11 +14,13 @@ namespace Education.API.Controllers
     {
         private readonly UserManager<UserModel> _userManager;
         private readonly IAuthServise _authService;
+        private readonly ISendEmailService _sendEmailService;
 
-        public AuthController(UserManager<UserModel> userManager, IAuthServise authService)
+        public AuthController(UserManager<UserModel> userManager, IAuthServise authService, ISendEmailService sendEmailService)
         {
             _userManager = userManager;
             _authService = authService;
+            _sendEmailService = sendEmailService;
         }
 
         [HttpPost]
@@ -37,6 +40,12 @@ namespace Education.API.Controllers
             };
 
             var result = await _userManager.CreateAsync(user, register.Password);
+            await _sendEmailService.SendEmailAsync(new EmailModel
+            {
+                Body=$"{user.FullName} registratsiyadan otganingiz bilan tabriklaydi Abduxoliq",
+                Subject="EdFix",
+                To=$"{user.Email}"
+            });
 
             if (!result.Succeeded)
                 throw new Exception();
