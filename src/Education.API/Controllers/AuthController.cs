@@ -99,6 +99,45 @@ namespace Education.API.Controllers
             });
 
         }
+
+        [HttpPost]
+        public async Task<ResponseModel> ForgotPassword(string email)
+        {
+            var user=await _userManager.FindByEmailAsync(email);
+            if(user == null)
+            {
+                return new ResponseModel
+                {
+                    IsSuccess = false,
+                    Message = "Email not Found",
+                    StatusCode = 404
+                };
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            var random=new Random();
+
+            var password = $"Demo!{random.Next(1000, 9999)}";
+
+
+            await _userManager.ResetPasswordAsync(user, token, password);
+
+            await _sendEmailService.SendEmailAsync(new EmailModel
+            {
+                Body = $"Your new Password {password}",
+                Subject = "Password",
+                To = email
+            });
+
+            return new ResponseModel
+            {
+                IsSuccess = true,
+                Message = "reset",
+                StatusCode = 200
+            };
+
+        }
     }
 }
 
